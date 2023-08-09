@@ -39,4 +39,4 @@ out/
 <<<<<<< HEAD
 
 #DB
-.src/main/resources/application.properties
+application.properties
