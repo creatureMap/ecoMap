@@ -70,7 +70,8 @@ public class Creature {
         this.creature_protection_class = creature_protection_class;
         this.image_url = image_url;
     }
-    //..
+
+
 
 }
 

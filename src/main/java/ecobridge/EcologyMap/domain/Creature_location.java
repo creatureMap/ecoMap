@@ -1,12 +1,9 @@
 package ecobridge.EcologyMap.domain;
 import jakarta.persistence.*;
-import jdk.jfr.StackTrace;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.Set;
+import lombok.*;
+
+
 
 
 @Entity
@@ -37,6 +34,12 @@ public class Creature_location {
     @Column(name="location_name", nullable = false)
 
     private String location_name;
+
+    @Builder //빌더 패턴으로 객체 생성
+    public Creature_location(double creature_latitude, double creature_longitude) {
+        this.creature_latitude = creature_latitude;
+        this.creature_longitude = creature_longitude;
+    }
 
 }
 
