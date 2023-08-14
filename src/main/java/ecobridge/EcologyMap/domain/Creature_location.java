@@ -31,14 +31,14 @@ public class Creature_location {
     private Creature creature;
 
     //장소 이름
-    @Column(name="location_name", nullable = false)
+    @Column(name="location_name", nullable = true)
     private String location_name;
 
-    @Builder //빌더 패턴으로 객체 생성
-    public Creature_location(double creature_latitude, double creature_longitude) {
-        this.creature_latitude = creature_latitude;
-        this.creature_longitude = creature_longitude;
-    }
+//    @Builder //빌더 패턴으로 객체 생성
+//    public Creature_location(double creature_latitude, double creature_longitude) {
+//        this.creature_latitude = creature_latitude;
+//        this.creature_longitude = creature_longitude;
+//    }
 
 }
 

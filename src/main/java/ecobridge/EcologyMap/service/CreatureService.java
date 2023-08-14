@@ -53,4 +53,10 @@ public class CreatureService {
         return creatureDTOs;
     }
 
+    // creature_location의 ID를 이용해 생물을 조회-> 핀에는 creature_location 정보가 들어있기 때문에 creature가 아닌 creature_location 활용
+    public Creature_location findCreatureDetail(long id){
+        return creatureLocationRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("not found: "+id));
+
+    }
 }

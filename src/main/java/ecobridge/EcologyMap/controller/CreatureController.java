@@ -1,11 +1,13 @@
 package ecobridge.EcologyMap.controller;
 
+import ecobridge.EcologyMap.domain.Creature_location;
 import ecobridge.EcologyMap.dto.CreatureDTO;
 import ecobridge.EcologyMap.service.CreatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +28,15 @@ public class CreatureController {
         List<CreatureDTO> creatureDTOs = creatureService.getAllCreatureLocations(); //CreatureService 클래스의 메서드를 호출하여 모든 생물의 위치 정보를 조회
         return new ResponseEntity<>(creatureDTOs, HttpStatus.OK); //반환된 'CreatureDTO' 객체 리스트를 'CreatureDTOs' 에 저장.
     }
+
+
+    @GetMapping("/cratures/{id}")
+    public ResponseEntity<Creature_location> getCreatureDetail(@PathVariable long id){
+        Creature_location creatureLocation = creatureService.findCreatureDetail(id);
+
+        return ResponseEntity.ok()
+                .body(creatureLocation);
+    }
+
+
 }
