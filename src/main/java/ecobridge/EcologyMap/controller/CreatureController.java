@@ -30,7 +30,7 @@ public class CreatureController {
     }
 
 
-    @GetMapping("/cratures/{id}")
+    @GetMapping("/creatures/{id}")
     public ResponseEntity<Creature_location> getCreatureDetail(@PathVariable long id){
         Creature_location creatureLocation = creatureService.findCreatureDetail(id);
 
