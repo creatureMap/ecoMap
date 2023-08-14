@@ -25,4 +25,7 @@ class CreatureControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].creature_latitude").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].creature_longitude").exists());
     }
+
+
+
 }
