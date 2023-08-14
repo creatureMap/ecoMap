@@ -38,9 +38,7 @@ public class CreatureService {
 
         //가져온 위치 정보들을 순회하면서
         for (Creature_location location : locations) {
-            //creatureRepository.findById(location.getId())를 통해 해당 위치의 생물 정보를 찾는다.
-            //location.getId()는 Creature_location 엔티티의 ID.
-            Creature creature = creatureRepository.findById(location.getId()).orElse(null);
+            Creature creature = location.getCreature(); //생물 정보를 바로 가져옵니다
 
             //해당 위치에 연관된 생물 정보가 있다면
             if (creature != null) {
