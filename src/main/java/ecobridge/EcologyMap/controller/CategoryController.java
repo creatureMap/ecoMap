@@ -1,46 +1,33 @@
 package ecobridge.EcologyMap.controller;
 
 import ecobridge.EcologyMap.domain.Creature;
-import ecobridge.EcologyMap.dto.CreatureLocationDTO;
-import ecobridge.EcologyMap.repository.CategoryLocationRepository;
-import ecobridge.EcologyMap.repository.CategoryRepository;
+import ecobridge.EcologyMap.domain.Creature_location;
+import ecobridge.EcologyMap.domain.Main_Category;
+import ecobridge.EcologyMap.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/creatures")
 public class CategoryController {
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private CategoryLocationRepository categoryLocationRepository;
 
-    @GetMapping("/creatures/{category}")
-    public ResponseEntity<List<CreatureLocationDTO>> getCreatureLocationsByCategory(@PathVariable String category) {
-        List<Creature> creatures = categoryRepository.findByCategory(category);
+    private final CategoryService categoryService;
 
-        List<CreatureLocationDTO> creatureLocationDTOs = new ArrayList<>();
-        for (Creature creature : creatures) {
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
-            CreatureLocation creatureLocation = creature.getCreatureLocation();
-
-            creatureLocationDTOs.add(new CreatureLocationDTO(
-
-                    creatureLocation.getCreatureLatitude(),
-                    creatureLocation.getCreatureLongitude()
-
-
-            ));
-        }
-
-        return ResponseEntity.ok(creatureLocationDTOs);
+    @GetMapping("/locations")
+    public ResponseEntity<List<Creature_location>> getCreatureLocationsByMainCategory(@RequestParam("main_category_name") String main_category_name) {
+        List<Creature_location> creatureLocations = categoryService.findLocationsByMainCategory(main_category_name);
+        return ResponseEntity.ok(creatureLocations);
     }
 }
 

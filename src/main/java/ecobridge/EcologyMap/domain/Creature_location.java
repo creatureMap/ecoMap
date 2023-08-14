@@ -1,13 +1,17 @@
 package ecobridge.EcologyMap.domain;
 import jakarta.persistence.*;
 
+
 import lombok.*;
 
 
 
 
+
+
+
 @Entity
-@Getter
+@Getter@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Creature_location {
 
@@ -32,7 +36,6 @@ public class Creature_location {
 
     //장소 이름
     @Column(name="location_name", nullable = false)
-
     private String location_name;
 
     @Builder //빌더 패턴으로 객체 생성

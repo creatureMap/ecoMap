@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 
 @Entity
-@Getter
+@Getter@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Detail_Category {
 
@@ -17,5 +20,8 @@ public class Detail_Category {
 
     @Column(name="Category_name")
     private String category_name;
+
+    //@OneToMany(mappedBy = "detail_category", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Creature> creatures;
 
 }

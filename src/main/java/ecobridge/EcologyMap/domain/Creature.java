@@ -1,16 +1,15 @@
 package ecobridge.EcologyMap.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.*;
 
+
+import java.util.List;
 
 
 @Entity
-@Getter //자동으로 GET메서드를 통해 필드 접근 가능
+@Getter
+@Setter//자동으로 GET메서드를 통해 필드 접근 가능
 @NoArgsConstructor(access = AccessLevel.PROTECTED) //접근제어자가 protected인 기본생성자 코드없이 생성
 public class Creature {
 
@@ -36,11 +35,14 @@ public class Creature {
     //메인카테고리 ID
     @ManyToOne
     @JoinColumn(name = "main_category_id")
-    private Main_Category category;
+    private Main_Category mainCategory;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Detail_Category detail_category;
+
+    @OneToMany(mappedBy = "creature", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Creature_location> creatureLocations;
 
     //생물 이름
     @Column(name = "creature_name", nullable = false)
@@ -70,8 +72,6 @@ public class Creature {
         this.creature_protection_class = creature_protection_class;
         this.image_url = image_url;
     }
-
-
 
 }
 
