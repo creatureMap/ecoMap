@@ -71,26 +71,28 @@ public class CreatureService {
 
     }
 
-    /*public List<CreatureDTO> getCategoryCreatureLocations(Long mainCategoryId) {
-        List<CreatureLocation> locations = creatureLocationRepository.findAll();
-        List<CreatureDTO> creatureDTOs = new ArrayList<>();
 
-        for (CreatureLocation location : locations) {
-            Creature creature = location.getCreature();
-            if (creature != null && creature.getMainCategory().getMain_category_id().equals(mainCategoryId)) {
-                CreatureDTO dto = new CreatureDTO();
 
-                dto.setCreatureId(creature.getCreatureId());
-                dto.setCreatureLatitude(location.getCreatureLatitude());
-                dto.setCreatureLongitude(location.getCreatureLongitude());
-                dto.setLocationId(location.getLocationId());
+    public List<CreatureDTO> getCategoryCreatureLocations(Long mainCategoryId) {
+            List<CreatureLocation> locations = creatureLocationRepository.findAll();
+            List<CreatureDTO> creatureDTOs = new ArrayList<>();
 
-                creatureDTOs.add(dto);
+            for (CreatureLocation location : locations) {
+                Creature creature = location.getCreature();
+                if (creature != null && creature.getMainCategory().getMain_category_id().equals(mainCategoryId)) {
+                    CreatureDTO dto = new CreatureDTO();
+
+                    dto.setCreatureId(creature.getCreatureId());
+                    dto.setCreatureLatitude(location.getCreatureLatitude());
+                    dto.setCreatureLongitude(location.getCreatureLongitude());
+                    dto.setLocationId(location.getLocationId());
+
+                    creatureDTOs.add(dto);
+                }
             }
-        }
 
-        return creatureDTOs;
-    }*/
+            return creatureDTOs;
+        }
 
 }
 

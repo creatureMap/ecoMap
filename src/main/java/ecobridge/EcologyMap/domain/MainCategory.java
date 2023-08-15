@@ -23,8 +23,6 @@ public class MainCategory {
     @Column(name="main_category_name", nullable = false)
     private String mainCategoryName;
 
-    @OneToMany(mappedBy = "mainCategory")
-    private List<Creature> creatures = new ArrayList<>();
 
     public Long getMain_category_id() {
         return mainCategoryId;

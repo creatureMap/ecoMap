@@ -44,9 +44,6 @@ public class Creature {
         @JoinColumn(name = "detail_category_id")
         private DetailCategory detailCategory;
 
-        @OneToMany(mappedBy = "creature", fetch = FetchType.LAZY)
-        private List<CreatureLocation> creatureLocations;
-
         //생물 이름
         @Column(name = "creature_name", nullable = false)
         private String creatureName;

@@ -21,7 +21,6 @@ public class DetailCategory {
     @Column(name="Category_name")
     private String categoryName;
 
-    @OneToMany(mappedBy = "detailCategory", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Creature> creatures;
+
 
 }
