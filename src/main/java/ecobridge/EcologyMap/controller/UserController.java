@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/login")
+    @GetMapping("/join")
     public @ResponseBody String test(){
-        return "User";
+        return "Join";
     }
 }
