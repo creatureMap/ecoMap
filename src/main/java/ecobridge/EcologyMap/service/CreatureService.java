@@ -3,14 +3,19 @@ package ecobridge.EcologyMap.service;
 import ecobridge.EcologyMap.domain.Creature;
 import ecobridge.EcologyMap.domain.CreatureLocation;
 import ecobridge.EcologyMap.dto.CreatureDTO;
+
 import ecobridge.EcologyMap.repository.CreatureLocationRepository;
 import ecobridge.EcologyMap.repository.CreatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 import java.util.ArrayList;
 import java.util.List;
+
+
+
 
 
 @Service //빈으로 등록
@@ -41,9 +46,14 @@ public class CreatureService {
             //해당 위치에 연관된 생물 정보가 있다면, 생물들의 위치정보를 dto 에 저장
             if (creature != null) {
                 CreatureDTO dto = new CreatureDTO();  //'CreatureDTO' 객체 생성
+
+                dto.setCreatureLatitude(location.getCreatureLatitude()); //위도 정보 설정
+                dto.setCreatureLongitude(location.getCreatureLongitude()); //경도 정보 설정
+
                 dto.setCreatureId(creature.getCreatureId()); //생물의 ID 설정
                 dto.setCreatureLatitude(location.getCreatureLatitude()); //위도 정보 설정
                 dto.setCreatureLongitude(location.getCreatureLongitude()); //경도 정보 설정
+
 
 
                 creatureDTOs.add(dto); //위치 정보 설정 후 'creatureDTOs' 리스트에 추가.
@@ -60,4 +70,30 @@ public class CreatureService {
                 .orElseThrow(()-> new IllegalArgumentException("not found: "+id));
 
     }
+
+
+
+    public List<CreatureDTO> getCategoryCreatureLocations(Long mainCategoryId) {
+            List<CreatureLocation> locations = creatureLocationRepository.findAll();
+            List<CreatureDTO> creatureDTOs = new ArrayList<>();
+
+            for (CreatureLocation location : locations) {
+                Creature creature = location.getCreature();
+                if (creature != null && creature.getMainCategory().getMain_category_id().equals(mainCategoryId)) {
+                    CreatureDTO dto = new CreatureDTO();
+
+                    dto.setCreatureId(creature.getCreatureId());
+                    dto.setCreatureLatitude(location.getCreatureLatitude());
+                    dto.setCreatureLongitude(location.getCreatureLongitude());
+                    dto.setLocationId(location.getLocationId());
+
+                    creatureDTOs.add(dto);
+                }
+            }
+
+            return creatureDTOs;
+        }
+
 }
+
+

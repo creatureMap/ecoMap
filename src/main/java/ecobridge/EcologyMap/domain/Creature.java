@@ -1,15 +1,21 @@
-    package ecobridge.EcologyMap.domain;
-
-    import jakarta.persistence.*;
-    import lombok.*;
-
-    import java.util.List;
+package ecobridge.EcologyMap.domain;
 
 
-    @Entity
-    @Getter //자동으로 GET메서드를 통해 필드 접근 가능
-    @NoArgsConstructor(access = AccessLevel.PROTECTED) //접근제어자가 protected인 기본생성자 코드없이 생성
-    public class Creature {
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+
+@Entity
+@Getter
+@Setter//자동으로 GET메서드를 통해 필드 접근 가능
+@NoArgsConstructor(access = AccessLevel.PROTECTED) //접근제어자가 protected인 기본생성자 코드없이 생성
+public class Creature {
 
         //생물 ID
         @Id
@@ -25,7 +31,6 @@
         @Column(name = "creature_information", nullable = false)
         private String creatureInformation;
 
-
         //이미지 URL
         @Column(name = "image_url", nullable = false)
         private String imageUrl;
@@ -36,7 +41,7 @@
         private MainCategory mainCategory;
 
         @ManyToOne
-        @JoinColumn(name = "category_id")
+        @JoinColumn(name = "detail_category_id")
         private DetailCategory detailCategory;
 
         //생물 이름
@@ -56,13 +61,14 @@
         private boolean winter;
 
         @Builder //빌더 패턴으로 객체 생성
-        public Creature(String creature_information, String creature_name, Long creature_protection_class, String image_url) {
-            this.creatureInformation = creature_information;
-            this.creatureName = creature_name;
-            this.creatureProtectionClass = creature_protection_class;
-            this.imageUrl = image_url;
-        }
-        //..
+
+        public Creature(String creatureInformation, String creatureName, Long creatureProtectionClass, String imageUrl) {
+            this.creatureInformation = creatureInformation;
+            this.creatureName = creatureName;
+            this.creatureProtectionClass = creatureProtectionClass;
+            this.imageUrl = imageUrl;
+
 
     }
+}
 

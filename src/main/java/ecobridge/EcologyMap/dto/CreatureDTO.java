@@ -9,4 +9,7 @@ public class CreatureDTO { // 생물의 위치 정보를 전달하기 위한 데
     private Long creatureId;
     private double creatureLatitude;
     private double creatureLongitude;
+    private Long locationId;
+
+
 }

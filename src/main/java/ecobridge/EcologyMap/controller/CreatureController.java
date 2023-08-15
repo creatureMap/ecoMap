@@ -1,17 +1,20 @@
 package ecobridge.EcologyMap.controller;
 
+
+import ecobridge.EcologyMap.domain.Creature;
 import ecobridge.EcologyMap.domain.CreatureLocation;
 import ecobridge.EcologyMap.dto.CreatureDTO;
+import ecobridge.EcologyMap.dto.CreatureLocationDTO;
+import ecobridge.EcologyMap.repository.CreatureRepository;
 import ecobridge.EcologyMap.service.CreatureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
+
 
 @RestController //HTTP Response Body 에 객체 데이터를 JSON 형싟으로 변환하는 컨트롤러
 @RequestMapping("/api")  // '/api' 로 시작하는 URL 을 처리한다는 의미
@@ -22,6 +25,9 @@ public class CreatureController {
     public CreatureController(CreatureService creatureService) {
         this.creatureService = creatureService;
     }
+
+    @Autowired
+    CreatureRepository creatureRepository;
 
     @GetMapping("/creatures")
     public ResponseEntity<List<CreatureDTO>> getAllCreatureLocationsWithId() {
@@ -38,5 +44,9 @@ public class CreatureController {
                 .body(creatureLocation);
     }
 
-
+    @GetMapping("/creatures/{mainCategoryId}")
+    public ResponseEntity<List<CreatureDTO>> getCategoryCreatureLocations(@PathVariable long mainCategoryId) {
+        List<CreatureDTO> creatureDTOs = creatureService.getCategoryCreatureLocations(mainCategoryId);
+        return ResponseEntity.ok(creatureDTOs);
+    }
 }
