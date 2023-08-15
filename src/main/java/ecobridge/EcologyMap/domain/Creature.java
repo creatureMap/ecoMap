@@ -31,34 +31,25 @@ public class Creature {
         @Column(name = "creature_information", nullable = false)
         private String creatureInformation;
 
-
         //이미지 URL
         @Column(name = "image_url", nullable = false)
         private String imageUrl;
 
-
         //메인카테고리 ID
         @ManyToOne
         @JoinColumn(name = "main_category_id")
-
         private MainCategory mainCategory;
-
 
         @ManyToOne
         @JoinColumn(name = "detail_category_id")
         private DetailCategory detailCategory;
 
-
         @OneToMany(mappedBy = "creature", fetch = FetchType.LAZY)
         private List<CreatureLocation> creatureLocations;
-
 
         //생물 이름
         @Column(name = "creature_name", nullable = false)
         private String creatureName;
-
-
-
 
         @Column(name = "spring", nullable = false)
         private boolean spring;

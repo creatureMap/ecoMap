@@ -20,8 +20,7 @@ public class CreatureLocation {
     //고유 ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(name="location_id", updatable = false)
+    @Column(name="id", updatable = false)
     private Long locationId;
 
     //위도
@@ -40,24 +39,6 @@ public class CreatureLocation {
     //장소 이름
     @Column(name="location_name", nullable = true)
     private String locationName;
-
-    public double getLatitude() {
-        return creatureLatitude;
-    }
-
-    public double getLongitude() {
-        return creatureLongitude;
-    }
-
-    public String getLocationName() {
-        return locationName;
-    }
-
-    @Builder //빌더 패턴으로 객체 생성
-    public CreatureLocation(double creature_latitude, double creature_longitude) {
-        this.creatureLatitude = creatureLatitude;
-        this.creatureLongitude = creatureLongitude;
-    }
 
 }
 

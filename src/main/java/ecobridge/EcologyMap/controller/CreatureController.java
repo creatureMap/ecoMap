@@ -36,7 +36,7 @@ public class CreatureController {
     }
 
 
-    @GetMapping("/creatures/{id}")
+    @GetMapping("/creatures/detail/{id}")
     public ResponseEntity<CreatureLocation> getCreatureDetail(@PathVariable long id){
         CreatureLocation creatureLocation = creatureService.findCreatureDetail(id);
 
@@ -44,4 +44,9 @@ public class CreatureController {
                 .body(creatureLocation);
     }
 
+    /*@GetMapping("/creatures/{mainCategoryId}")
+    public ResponseEntity<List<CreatureDTO>> getCategoryCreatureLocations(@RequestParam("mainCategoryId") Long mainCategoryId) {
+        List<CreatureDTO> creatureDTOs = creatureService.getCategoryCreatureLocations(mainCategoryId);
+        return ResponseEntity.ok(creatureDTOs);
+    }*/
 }
