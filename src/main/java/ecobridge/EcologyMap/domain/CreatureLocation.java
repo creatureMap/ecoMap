@@ -1,6 +1,6 @@
 package ecobridge.EcologyMap.domain;
 import jakarta.persistence.*;
-<<<<<<< HEAD:src/main/java/ecobridge/EcologyMap/domain/Creature_location.java
+
 
 
 import lombok.*;
@@ -10,10 +10,7 @@ import lombok.*;
 
 
 
-=======
-import lombok.*;
 
->>>>>>> f28802824cadbda2bcadf2278dd50401f1e859db:src/main/java/ecobridge/EcologyMap/domain/CreatureLocation.java
 
 @Entity
 @Getter@Setter
@@ -24,10 +21,7 @@ public class CreatureLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @Column(name="id", updatable = false)
-
     @Column(name="location_id", updatable = false)
-
     private Long locationId;
 
     //위도
@@ -60,7 +54,7 @@ public class CreatureLocation {
     }
 
     @Builder //빌더 패턴으로 객체 생성
-    public Creature_location(double creature_latitude, double creature_longitude) {
+    public CreatureLocation(double creature_latitude, double creature_longitude) {
         this.creatureLatitude = creatureLatitude;
         this.creatureLongitude = creatureLongitude;
     }

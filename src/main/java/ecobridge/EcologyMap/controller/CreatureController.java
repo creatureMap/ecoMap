@@ -1,23 +1,20 @@
 package ecobridge.EcologyMap.controller;
 
-<<<<<<< HEAD
+
 import ecobridge.EcologyMap.domain.Creature;
-import ecobridge.EcologyMap.domain.Creature_location;
-=======
 import ecobridge.EcologyMap.domain.CreatureLocation;
->>>>>>> f28802824cadbda2bcadf2278dd50401f1e859db
 import ecobridge.EcologyMap.dto.CreatureDTO;
 import ecobridge.EcologyMap.dto.CreatureLocationDTO;
 import ecobridge.EcologyMap.repository.CreatureRepository;
 import ecobridge.EcologyMap.service.CreatureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController //HTTP Response Body 에 객체 데이터를 JSON 형싟으로 변환하는 컨트롤러
 @RequestMapping("/api")  // '/api' 로 시작하는 URL 을 처리한다는 의미
@@ -45,26 +42,6 @@ public class CreatureController {
 
         return ResponseEntity.ok()
                 .body(creatureLocation);
-    }
-
-    @PostMapping("/filterByMainCategory")
-    public List<CreatureDTO> getCategoryCreatureLocations(@RequestParam("mainCategoryId") Long mainCategoryId) {
-        List<Creature_location> locations = CreatureLocationRepository.findAll();
-        List<CreatureDTO> creatureDTOs = new ArrayList<>();
-
-        for (Creature_location location : locations) {
-            Creature creature = location.getCreature();
-
-            // 해당 위치에 연관된 생물 정보가 있고, mainCategoryId와 일치하는 경우에만 처리
-            if (creature != null && creature.getMainCategory().getMain_category_id().equals(mainCategoryId)) {
-                CreatureDTO dto = new CreatureDTO();
-                dto.setCreatureLatitude(location.getCreatureLatitude());
-                dto.setCreatureLongitude(location.getCreatureLongitude());
-                creatureDTOs.add(dto);
-            }
-        }
-
-        return creatureDTOs;
     }
 
 }

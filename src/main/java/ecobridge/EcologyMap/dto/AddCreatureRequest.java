@@ -16,11 +16,11 @@ public class AddCreatureRequest {
     public Creature toEntity() { // 생성자를 사용해 객체 생성
         return Creature.builder()
 
-                .creatureName(creature_name)
-                .creatureInformation(creature_information)
+                .creatureName(creatureName)
+                .creatureInformation(creatureInformation)
 
-                .creature_name(creatureName)
-                .creature_information(creatureInformation)
+                .creatureName(creatureName)
+                .creatureInformation(creatureInformation)
 
                 .build();
     }

@@ -8,10 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
-
-
-
+import java.util.List;
 
 
 @Entity
@@ -44,23 +41,16 @@ public class Creature {
         @ManyToOne
         @JoinColumn(name = "main_category_id")
 
-        private Main_Category mainCategory;
+        private MainCategory mainCategory;
 
 
         @ManyToOne
         @JoinColumn(name = "detail_category_id")
-        private Detail_Category detailCategory;
+        private DetailCategory detailCategory;
 
 
         @OneToMany(mappedBy = "creature", fetch = FetchType.LAZY)
-        private List<Creature_location> creatureLocations;
-
-
-        private MainCategory mainCategory;
-
-        @ManyToOne
-        @JoinColumn(name = "category_id")
-        private DetailCategory detailCategory;
+        private List<CreatureLocation> creatureLocations;
 
 
         //생물 이름
@@ -83,28 +73,14 @@ public class Creature {
         private boolean winter;
 
         @Builder //빌더 패턴으로 객체 생성
-<<<<<<< HEAD
+
         public Creature(String creatureInformation, String creatureName, Long creatureProtectionClass, String imageUrl) {
             this.creatureInformation = creatureInformation;
             this.creatureName = creatureName;
             this.creatureProtectionClass = creatureProtectionClass;
             this.imageUrl = imageUrl;
-=======
-        public Creature(String creature_information, String creature_name, Long creature_protection_class, String image_url) {
-            this.creatureInformation = creature_information;
-            this.creatureName = creature_name;
-            this.creatureProtectionClass = creature_protection_class;
-            this.imageUrl = image_url;
->>>>>>> f28802824cadbda2bcadf2278dd50401f1e859db
-        }
 
-        public Long getId() {
-                return creatureId;
-        }
 
-        public String getName() {
-                return creatureName;
-        }
     }
-
+}
 
