@@ -1,5 +1,6 @@
 package ecobridge.EcologyMap.domain;
 import jakarta.persistence.*;
+<<<<<<< HEAD:src/main/java/ecobridge/EcologyMap/domain/Creature_location.java
 
 
 import lombok.*;
@@ -9,16 +10,24 @@ import lombok.*;
 
 
 
+=======
+import lombok.*;
+
+>>>>>>> f28802824cadbda2bcadf2278dd50401f1e859db:src/main/java/ecobridge/EcologyMap/domain/CreatureLocation.java
 
 @Entity
 @Getter@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Creature_location {
+public class CreatureLocation {
 
     //고유 ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name="id", updatable = false)
+
+    @Column(name="location_id", updatable = false)
+
     private Long locationId;
 
     //위도
@@ -30,7 +39,7 @@ public class Creature_location {
     private double creatureLongitude;
 
     //생물 ID
-    @ManyToOne //Creation_location 엔티티가 하나의 Creature 엔티티와 관계를 맺을 수 있음을 타나냄.
+    @ManyToOne //CreationLocation 엔티티가 하나의 Creature 엔티티와 관계를 맺을 수 있음을 타나냄.
     @JoinColumn(name = "creature_id")
     private Creature creature;
 

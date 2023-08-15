@@ -1,5 +1,6 @@
 package ecobridge.EcologyMap.domain;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.AccessLevel;
@@ -10,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 
 
-import java.util.List;
 
 
 
@@ -43,6 +43,7 @@ public class Creature {
         //메인카테고리 ID
         @ManyToOne
         @JoinColumn(name = "main_category_id")
+
         private Main_Category mainCategory;
 
 
@@ -55,9 +56,18 @@ public class Creature {
         private List<Creature_location> creatureLocations;
 
 
+        private MainCategory mainCategory;
+
+        @ManyToOne
+        @JoinColumn(name = "category_id")
+        private DetailCategory detailCategory;
+
+
         //생물 이름
         @Column(name = "creature_name", nullable = false)
         private String creatureName;
+
+
 
 
         @Column(name = "spring", nullable = false)
@@ -72,16 +82,20 @@ public class Creature {
         @Column(name = "winter", nullable = false)
         private boolean winter;
 
-
-
-
-
         @Builder //빌더 패턴으로 객체 생성
+<<<<<<< HEAD
         public Creature(String creatureInformation, String creatureName, Long creatureProtectionClass, String imageUrl) {
             this.creatureInformation = creatureInformation;
             this.creatureName = creatureName;
             this.creatureProtectionClass = creatureProtectionClass;
             this.imageUrl = imageUrl;
+=======
+        public Creature(String creature_information, String creature_name, Long creature_protection_class, String image_url) {
+            this.creatureInformation = creature_information;
+            this.creatureName = creature_name;
+            this.creatureProtectionClass = creature_protection_class;
+            this.imageUrl = image_url;
+>>>>>>> f28802824cadbda2bcadf2278dd50401f1e859db
         }
 
         public Long getId() {

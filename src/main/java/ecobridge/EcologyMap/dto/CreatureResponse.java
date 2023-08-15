@@ -1,7 +1,6 @@
 package ecobridge.EcologyMap.dto;
 
 import ecobridge.EcologyMap.domain.Creature;
-import ecobridge.EcologyMap.domain.Main_Category;
 import lombok.Getter;
 
 

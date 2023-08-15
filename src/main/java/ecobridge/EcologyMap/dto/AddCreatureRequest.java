@@ -10,13 +10,18 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AddCreatureRequest {
 
-    private String creature_name;
-    private String creature_information;
+    private String creatureName;
+    private String creatureInformation;
 
     public Creature toEntity() { // 생성자를 사용해 객체 생성
         return Creature.builder()
+
                 .creatureName(creature_name)
                 .creatureInformation(creature_information)
+
+                .creature_name(creatureName)
+                .creature_information(creatureInformation)
+
                 .build();
     }
 }

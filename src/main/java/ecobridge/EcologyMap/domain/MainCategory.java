@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Main_Category {
+public class MainCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +36,13 @@ public class Main_Category {
 
 
 
+=======
+    @Column(name="Main_category_id", updatable = false)
+    private Long mainCategoryId;
+
+    @Column(name="Main_category_name", nullable = false)
+    private String mainCategoryName;
+>>>>>>> f28802824cadbda2bcadf2278dd50401f1e859db:src/main/java/ecobridge/EcologyMap/domain/MainCategory.java
 
 }
 

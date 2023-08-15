@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Detail_Category {
+public class DetailCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
