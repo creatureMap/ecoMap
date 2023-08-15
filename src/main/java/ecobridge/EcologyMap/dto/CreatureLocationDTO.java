@@ -8,11 +8,11 @@ import lombok.Setter;
 @Getter@Setter
 
 public class CreatureLocationDTO {
-    private Long locationId;
+    private long locationId;
     private double latitude;
     private double longitude;
 
-    public CreatureLocationDTO(Long locationId, double latitude, double longitude) {
+    public CreatureLocationDTO(long locationId, double latitude, double longitude) {
         this.locationId = locationId;
         this.latitude = latitude;
         this.longitude = longitude;

@@ -60,7 +60,7 @@ public class Creature {
         @Column(name = "winter", nullable = false)
         private boolean winter;
 
-        @Builder //빌더 패턴으로 객체 생성
+        /*@Builder //빌더 패턴으로 객체 생성
 
         public Creature(String creatureInformation, String creatureName, Long creatureProtectionClass, String imageUrl) {
             this.creatureInformation = creatureInformation;
@@ -69,6 +69,6 @@ public class Creature {
             this.imageUrl = imageUrl;
 
 
-    }
+    }*/
 }
 
