@@ -1,12 +1,9 @@
     package ecobridge.EcologyMap.domain;
 
     import jakarta.persistence.*;
-    import lombok.AccessLevel;
-    import lombok.Builder;
-    import lombok.Getter;
-    import lombok.NoArgsConstructor;
-    import org.hibernate.annotations.ColumnDefault;
+    import lombok.*;
 
+    import java.util.List;
 
 
     @Entity
@@ -18,34 +15,33 @@
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "creature_id", updatable = false)
-        private Long creature_id;
+        private Long creatureId;
 
         //생물 보호등급
         @Column(name = "creature_protection_class", nullable = false)
-        private Long creature_protection_class;
+        private Long creatureProtectionClass;
 
         //생물 정보
         @Column(name = "creature_information", nullable = false)
-        private String creature_information;
+        private String creatureInformation;
 
 
         //이미지 URL
         @Column(name = "image_url", nullable = false)
-        private String image_url;
+        private String imageUrl;
 
         //메인카테고리 ID
         @ManyToOne
         @JoinColumn(name = "main_category_id")
-        private Main_Category category;
+        private MainCategory mainCategory;
 
         @ManyToOne
         @JoinColumn(name = "category_id")
-        private Detail_Category detail_category;
+        private DetailCategory detailCategory;
 
         //생물 이름
         @Column(name = "creature_name", nullable = false)
-        private String creature_name;
-
+        private String creatureName;
 
         @Column(name = "spring", nullable = false)
         private boolean spring;
@@ -59,16 +55,12 @@
         @Column(name = "winter", nullable = false)
         private boolean winter;
 
-
-
-
-
         @Builder //빌더 패턴으로 객체 생성
         public Creature(String creature_information, String creature_name, Long creature_protection_class, String image_url) {
-            this.creature_information = creature_information;
-            this.creature_name = creature_name;
-            this.creature_protection_class = creature_protection_class;
-            this.image_url = image_url;
+            this.creatureInformation = creature_information;
+            this.creatureName = creature_name;
+            this.creatureProtectionClass = creature_protection_class;
+            this.imageUrl = image_url;
         }
         //..
 
