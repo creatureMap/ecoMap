@@ -16,12 +16,12 @@ public class Detail_Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Category_id")
-    private Long category_id;
+    private Long categoryId;
 
     @Column(name="Category_name")
-    private String category_name;
+    private String categoryName;
 
-    //@OneToMany(mappedBy = "detail_category", cascade = CascadeType.ALL, orphanRemoval = true)
-    //private List<Creature> creatures;
+    @OneToMany(mappedBy = "detailCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Creature> creatures;
 
 }

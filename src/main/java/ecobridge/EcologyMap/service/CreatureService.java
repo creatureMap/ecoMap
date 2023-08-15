@@ -3,16 +3,19 @@ package ecobridge.EcologyMap.service;
 import ecobridge.EcologyMap.domain.Creature;
 import ecobridge.EcologyMap.domain.Creature_location;
 import ecobridge.EcologyMap.dto.CreatureDTO;
+import ecobridge.EcologyMap.dto.CreatureLocationDTO;
 import ecobridge.EcologyMap.repository.CreatureLocationRepository;
 import ecobridge.EcologyMap.repository.CreatureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service //빈으로 등록
@@ -43,8 +46,8 @@ public class CreatureService {
             //해당 위치에 연관된 생물 정보가 있다면
             if (creature != null) {
                 CreatureDTO dto = new CreatureDTO();  //'CreatureDTO' 객체 생성
-                dto.setCreature_latitude(location.getCreature_latitude()); //위도 정보 설정
-                dto.setCreature_longitude(location.getCreature_longitude()); //경도 정보 설정
+                dto.setCreatureLatitude(location.getCreatureLatitude()); //위도 정보 설정
+                dto.setCreatureLongitude(location.getCreatureLongitude()); //경도 정보 설정
                 creatureDTOs.add(dto); //위치 정보 설정 후 'creatureDTOs' 리스트에 추가.
             }
         }
@@ -53,4 +56,38 @@ public class CreatureService {
         return creatureDTOs;
     }
 
+    // creature_location의 ID를 이용해 생물을 조회-> 핀에는 creature_location 정보가 들어있기 때문에 creature가 아닌 creature_location 활용
+    public Creature_location findCreatureDetail(long id){
+        return creatureLocationRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("not found: "+id));
+
+    }
+
+
+    public List<CreatureDTO> getCategoryCreatureLocations(@RequestBody MainCategoryIdRequest request) {
+        //findAll() 호출 -> DB 에서 모든 'Creature_location' 엔티티를 가져오기
+        List<Creature_location> locations = creatureLocationRepository.findAll();
+        List<CreatureDTO> creatureDTOs = new ArrayList<>();
+
+        //가져온 위치 정보들을 순회하면서
+        for (Creature_location location : locations) {
+            Creature creature = location.getCreature(); //생물 정보를 바로 가져옵니다
+
+            //해당 위치에 연관된 생물 정보가 있다면
+            if (creature != null && creature.getMainCategory().getMain_category_id().equals(request.getMainCategoryId())) {
+                CreatureDTO dto = new CreatureDTO();  //'CreatureDTO' 객체 생성
+                dto.setCreatureLatitude(location.getCreatureLatitude()); //위도 정보 설정
+                dto.setCreatureLongitude(location.getCreatureLongitude()); //경도 정보 설정
+                creatureDTOs.add(dto); //위치 정보 설정 후 'creatureDTOs' 리스트에 추가.
+            }
+        }
+
+        //모든 위치 정보에 대해 반복 수행 후, 생성된 'creatureDTOs' 리스트 반환.
+        return creatureDTOs;
+    }
+
+
+
 }
+
+
