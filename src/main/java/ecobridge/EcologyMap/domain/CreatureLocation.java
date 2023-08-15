@@ -11,7 +11,7 @@ public class CreatureLocation {
     //고유 ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="location_id", updatable = false)
+    @Column(name="id", updatable = false)
     private Long locationId;
 
     //위도
