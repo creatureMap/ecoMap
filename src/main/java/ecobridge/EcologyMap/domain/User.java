@@ -2,6 +2,7 @@ package ecobridge.EcologyMap.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +30,12 @@ public class User implements UserDetails {
 
     @Column(name="email", nullable = false)
     private String email;
+
+    @Builder
+    public User(String username, String password, String auth) {
+        this.username = username;
+        this.password = password;
+    }
 
     @Override //권한 반환
     public Collection<? extends GrantedAuthority> getAuthorities() {

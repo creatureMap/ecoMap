@@ -50,7 +50,8 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailService)
         throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
+        return http
+                .getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userService)//사용자 정보를 가져올 서비스 클래스 설정
                 .passwordEncoder(bCryptPasswordEncoder).and().build();
     }
