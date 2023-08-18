@@ -15,7 +15,10 @@ public class CreatureDTO { // 생물의 위치 정보를 전달하기 위한 데
     private double creatureLongitude;
     private Long locationId;
     private Long mainCategoryId;
+    private Long detailCategoryId;
     private Long creatureProtectionClass;
+
+
 
     static public CreatureDTO of(CreatureLocation location){
         return CreatureDTO.builder()
@@ -24,6 +27,7 @@ public class CreatureDTO { // 생물의 위치 정보를 전달하기 위한 데
                 .creatureLongitude(location.getCreatureLongitude())
                 .locationId(location.getLocationId())
                 .mainCategoryId(location.getCreature().getMainCategory().getMainCategoryId())
+                .detailCategoryId(location.getCreature().getDetailCategory().getDetailCategoryId())
                 .creatureProtectionClass(location.getCreature().getCreatureProtectionClass())
                 .build();
     }
