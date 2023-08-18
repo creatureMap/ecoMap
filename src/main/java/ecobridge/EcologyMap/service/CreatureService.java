@@ -4,6 +4,7 @@ import ecobridge.EcologyMap.domain.Creature;
 import ecobridge.EcologyMap.domain.CreatureLocation;
 import ecobridge.EcologyMap.dto.CreatureDTO;
 
+import ecobridge.EcologyMap.dto.CreatureLocationDTO;
 import ecobridge.EcologyMap.repository.CreatureLocationRepository;
 import ecobridge.EcologyMap.repository.CreatureRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,16 @@ public class CreatureService {
         List<CreatureDTO> creatureDTOs = locations.stream().map(CreatureDTO::of).collect(Collectors.toList());
 
         return creatureDTOs;
+    }
+
+    public List<CreatureLocationDTO> getSearchCreatureDetails (String creatureName) {
+        List<CreatureLocation> locations = creatureLocationRepository.findAll();
+        locations = locations.stream()
+                .filter(location-> location.getCreature().getCreatureName().equals(creatureName))
+                .collect(Collectors.toList());
+        List<CreatureLocationDTO> creatureLocationDTOs = locations.stream().map(CreatureLocationDTO::of).collect(Collectors.toList());
+
+        return creatureLocationDTOs;
     }
 
 
