@@ -1,12 +1,16 @@
+
 package ecobridge.EcologyMap.config;
 
 import ecobridge.EcologyMap.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+<<<<<<< HEAD
+=======
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+>>>>>>> facbce9a568caedbb2a3ff5fdc2194f1de6843c5
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -62,3 +66,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
