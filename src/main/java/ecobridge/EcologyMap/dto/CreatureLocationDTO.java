@@ -1,21 +1,25 @@
 package ecobridge.EcologyMap.dto;
-
-
-
-import lombok.Getter;
-import lombok.Setter;
+import ecobridge.EcologyMap.domain.CreatureLocation;
+import lombok.*;
 
 @Getter@Setter
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CreatureLocationDTO {
     private long locationId;
-    private double latitude;
-    private double longitude;
+    private double creatureLatitude;
+    private double creatureLongitude;
+    private long creatureId;
 
-    public CreatureLocationDTO(long locationId, double latitude, double longitude) {
-        this.locationId = locationId;
-        this.latitude = latitude;
-        this.longitude = longitude;
+
+    static public CreatureLocationDTO of(CreatureLocation location){
+        return CreatureLocationDTO.builder()
+                .creatureId(location.getCreature().getCreatureId())
+                .creatureLatitude(location.getCreatureLatitude())
+                .creatureLongitude(location.getCreatureLongitude())
+                .locationId(location.getLocationId())
+                .build();
     }
 
     // getter, setter 등 필요한 메서드 작성
