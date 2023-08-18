@@ -36,6 +36,7 @@ public class CreatureLocation {
     @JoinColumn(name = "creature_id")
     private Creature creature;
 
+
     //장소 이름
     @Column(name="location_name", nullable = true)
     private String locationName;

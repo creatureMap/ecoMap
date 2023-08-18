@@ -49,4 +49,11 @@ public class CreatureController {
         List<CreatureDTO> creatureDTOs = creatureService.getCategoryCreatureLocations(mainCategoryId);
         return ResponseEntity.ok(creatureDTOs);
     }
+
+    @GetMapping("/creatures/{mainCategoryId}/{detailCategoryId}")
+    public ResponseEntity<List<CreatureDTO>> getDetailCategoryCreatureLocations(@PathVariable Long mainCategoryId,
+                                                                                @PathVariable Long detailCategoryId) {
+        List<CreatureDTO> creatureDTOs = creatureService.getDetailCategoryCreatureLocations(mainCategoryId, detailCategoryId);
+        return ResponseEntity.ok(creatureDTOs);
+    }
 }

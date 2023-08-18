@@ -47,6 +47,17 @@ public class CreatureService {
         return creatureDTOs;
     }
 
+    public List<CreatureDTO> getDetailCategoryCreatureLocations(Long mainCategoryId, Long detailCategoryId) {
+        List<CreatureLocation> locations = creatureLocationRepository.findAll();
+        locations = locations.stream()
+                .filter(location-> location.getCreature().getMainCategory().getMainCategoryId().equals(mainCategoryId))
+                .filter(location-> location.getCreature().getDetailCategory().getDetailCategoryId().equals(detailCategoryId))
+                .collect(Collectors.toList());
+        List<CreatureDTO> creatureDTOs = locations.stream().map(CreatureDTO::of).collect(Collectors.toList());
+
+        return creatureDTOs;
+    }
+
 
 }
 
