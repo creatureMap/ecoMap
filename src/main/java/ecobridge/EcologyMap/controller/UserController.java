@@ -23,12 +23,6 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<List<AddUserRequest>> loadUserByUsername() {
-        List<AddUserRequest> addUserRequests = userService.loadUserByUsername();
-        userService.save(request); //회원가입 메서드
-    }
-
     @GetMapping("/login")
     public String login() {
         return "login";

@@ -33,16 +33,17 @@ public class User implements UserDetails {
 
     @Column(name = "refresh_token", nullable = false)
     private String refreshToken;
-    
-    public RefreshToken(Long id, String refreshToken) {
-        this.id = id;
-        this.refreshToken  = refreshToken;
+
+    public User refreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+        return this;
     }
 
     @Builder
-    public User(String username, String password, String auth) {
+    public User(String username, String password, String refreshToken, String auth) {
         this.username = username;
         this.password = password;
+        this.refreshToken = refreshToken;
     }
 
     @Override //권한 반환

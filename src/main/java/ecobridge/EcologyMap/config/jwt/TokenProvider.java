@@ -6,11 +6,11 @@ import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
@@ -55,11 +55,13 @@ public class TokenProvider {
     }
 
     //토큰 기반으로 인증 정보를 가져옴
-    public Authentication getAuthentication(String token) {
+    public UsernamePasswordAuthenticationToken getAuthentication(String token) {
         Claims claims = getClaims(token);
+        //권한을 나타내는 클래스
         Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
 
-        return new UsernamePassWordAuthenticationToken
+        return new UsernamePasswordAuthenticationToken(new org.springframework.security.core.userdetails.User
+                (claims.getSubject(), "", authorities), token, authorities);
     }
 
     //토큰 기반으로 유저 ID를 가져옴
