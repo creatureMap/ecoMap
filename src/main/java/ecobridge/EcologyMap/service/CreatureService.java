@@ -1,15 +1,11 @@
 package ecobridge.EcologyMap.service;
-
-import ecobridge.EcologyMap.domain.Creature;
 import ecobridge.EcologyMap.domain.CreatureLocation;
 import ecobridge.EcologyMap.dto.CreatureDTO;
-
 import ecobridge.EcologyMap.dto.CreatureLocationDTO;
 import ecobridge.EcologyMap.repository.CreatureLocationRepository;
 import ecobridge.EcologyMap.repository.CreatureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +15,8 @@ import java.util.stream.Collectors;
 public class CreatureService {
 
     private final CreatureLocationRepository creatureLocationRepository;
+    private final CreatureRepository creatureRepository;
+
     /*
      * 전체 list 마커 찍기 -  DB 에서 생물의 위치 정보를 가져와 'CreatureDTO' 객체들을 생성하여 반환하는 메서드
      */
@@ -32,16 +30,16 @@ public class CreatureService {
     }
 
     // creature_location의 ID를 이용해 생물을 조회-> 핀에는 creature_location 정보가 들어있기 때문에 creature가 아닌 creature_location 활용
-    public CreatureLocation findCreatureDetail(long id){
+    public CreatureLocation findCreatureDetail(long id) {
         return creatureLocationRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("not found: "+id));
+                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
 
     }
 
 
     public List<CreatureDTO> getCategoryCreatureLocations(Long mainCategoryId) {
         List<CreatureLocation> locations = creatureLocationRepository.findAll();
-        locations = locations.stream().filter(location->
+        locations = locations.stream().filter(location ->
                 location.getCreature().getMainCategory().getMainCategoryId().equals(mainCategoryId)).collect(Collectors.toList());
         List<CreatureDTO> creatureDTOs = locations.stream().map(CreatureDTO::of).collect(Collectors.toList());
 
@@ -51,25 +49,32 @@ public class CreatureService {
     public List<CreatureDTO> getDetailCategoryCreatureLocations(Long mainCategoryId, Long detailCategoryId) {
         List<CreatureLocation> locations = creatureLocationRepository.findAll();
         locations = locations.stream()
-                .filter(location-> location.getCreature().getMainCategory().getMainCategoryId().equals(mainCategoryId))
-                .filter(location-> location.getCreature().getDetailCategory().getDetailCategoryId().equals(detailCategoryId))
+                .filter(location -> location.getCreature().getMainCategory().getMainCategoryId().equals(mainCategoryId))
+                .filter(location -> location.getCreature().getDetailCategory().getDetailCategoryId().equals(detailCategoryId))
                 .collect(Collectors.toList());
         List<CreatureDTO> creatureDTOs = locations.stream().map(CreatureDTO::of).collect(Collectors.toList());
 
         return creatureDTOs;
     }
 
-    public List<CreatureLocationDTO> getSearchCreatureDetails (String creatureName) {
+    public List<CreatureLocationDTO> getSearchCreatureDetails(String creatureName) {
         List<CreatureLocation> locations = creatureLocationRepository.findAll();
         locations = locations.stream()
-                .filter(location-> location.getCreature().getCreatureName().equals(creatureName))
+                .filter(location -> location.getCreature().getCreatureName().equals(creatureName))
                 .collect(Collectors.toList());
         List<CreatureLocationDTO> creatureLocationDTOs = locations.stream().map(CreatureLocationDTO::of).collect(Collectors.toList());
 
         return creatureLocationDTOs;
     }
 
+    public List<CreatureDTO> getSearchDetailCategory(String detailCategoryName) {
+        List<CreatureLocation> locations = creatureLocationRepository.findAll();
+        locations = locations.stream().filter(location ->
+                location.getCreature().getDetailCategory().getDetailCategoryName().equals(detailCategoryName)).collect(Collectors.toList());
+        List<CreatureDTO> creatureDTOs = locations.stream().map(CreatureDTO::of).collect(Collectors.toList());
 
+        return creatureDTOs;
+    }
 }
 
 

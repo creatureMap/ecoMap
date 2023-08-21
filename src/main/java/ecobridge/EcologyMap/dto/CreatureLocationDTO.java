@@ -1,4 +1,5 @@
 package ecobridge.EcologyMap.dto;
+import ecobridge.EcologyMap.domain.Creature;
 import ecobridge.EcologyMap.domain.CreatureLocation;
 import lombok.*;
 
