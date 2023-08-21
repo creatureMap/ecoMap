@@ -36,7 +36,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeRequests()
-                .requestMatchers("/login", "/user").permitAll()
+                .requestMatchers("/login","/signup", "/user").permitAll()
                 .anyRequest().authenticated().and() //특정 경로 엑세스
                 .formLogin(formLogin -> formLogin.
                         loginPage("/login").defaultSuccessUrl("/")) //로그인 관련 설정

@@ -4,13 +4,18 @@ package ecobridge.EcologyMap.controller;
 
 import ecobridge.EcologyMap.dto.AddUserRequest;
 import ecobridge.EcologyMap.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
@@ -18,14 +23,21 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
-    @GetMapping("/join")
-    public @ResponseBody String test(){
-        return "Join";
+    @PostMapping("/signup")
+    public ResponseEntity<List<AddUserRequest>> loadUserByUsername() {
+        List<AddUserRequest> addUserRequests = userService.loadUserByUsername();
+        userService.save(request); //회원가입 메서드
     }
 
-    @PostMapping("/user")
-    public String signup(AddUserRequest request) {
-        userService.save(request);
-        return "redirect:/login";
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response,
+                SecurityContextHolder.getContext().getAuthentication());
+        return "redirect:/";
     }
 }

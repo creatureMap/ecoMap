@@ -31,6 +31,14 @@ public class User implements UserDetails {
     @Column(name="email", nullable = false)
     private String email;
 
+    @Column(name = "refresh_token", nullable = false)
+    private String refreshToken;
+    
+    public RefreshToken(Long id, String refreshToken) {
+        this.id = id;
+        this.refreshToken  = refreshToken;
+    }
+
     @Builder
     public User(String username, String password, String auth) {
         this.username = username;
