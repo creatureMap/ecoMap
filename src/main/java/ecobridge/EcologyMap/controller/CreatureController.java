@@ -62,4 +62,10 @@ public class CreatureController {
         List<CreatureLocationDTO> creatureLocationDTOS = creatureService.getSearchCreatureDetails(creatureName);
         return ResponseEntity.ok(creatureLocationDTOS);
     }
+
+    @GetMapping("/creatures/SearchDetailCategoryName/{detailCategoryName}")
+    public ResponseEntity<List<CreatureDTO>> getSearchDetailCategory(@PathVariable String detailCategoryName){
+        List<CreatureDTO> creatureDTOS = creatureService.getSearchDetailCategory(detailCategoryName);
+        return ResponseEntity.ok(creatureDTOS);
+    }
 }
