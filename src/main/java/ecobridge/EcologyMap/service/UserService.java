@@ -3,7 +3,6 @@ package ecobridge.EcologyMap.service;
 import ecobridge.EcologyMap.domain.User;
 import ecobridge.EcologyMap.dto.AddUserRequest;
 import ecobridge.EcologyMap.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +23,7 @@ public class UserService implements UserDetailsService {
     @Override //사용자 아이디로 사용자의 정보를 가져오는 메서드
     public User loadUserByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException(username));
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     //객체를 인수로 받는 회원 정보 추가 메서드
