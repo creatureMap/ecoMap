@@ -1,7 +1,9 @@
 package ecobridge.EcologyMap.service;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import ecobridge.EcologyMap.domain.Creature;
 import ecobridge.EcologyMap.domain.CreatureLocation;
+import ecobridge.EcologyMap.domain.MainCategory;
 import ecobridge.EcologyMap.dto.CreatureDTO;
 
 import ecobridge.EcologyMap.repository.CreatureLocationRepository;
@@ -78,11 +80,15 @@ public class CreatureService {
             List<CreatureDTO> creatureDTOs = new ArrayList<>();
 
             for (CreatureLocation location : locations) {
-                Creature creature = location.getCreature();
-                if (creature != null && creature.getMainCategory().getMain_category_id().equals(mainCategoryId)) {
+//                Creature creature = location.getCreature();
+//                MainCategory origin=creature.getMainCategory();
+//                System.out.println(creature.getCreatureId());
+//                System.out.println(origin);
+//                System.out.println(creature.getMainCategory().getMainCategoryName());
+                if (location.getCreature() != null && location.getCreature().getMainCategory().getMainCategoryId().equals(mainCategoryId)) {
                     CreatureDTO dto = new CreatureDTO();
 
-                    dto.setCreatureId(creature.getCreatureId());
+                    dto.setCreatureId(location.getCreature().getCreatureId());
                     dto.setCreatureLatitude(location.getCreatureLatitude());
                     dto.setCreatureLongitude(location.getCreatureLongitude());
                     dto.setLocationId(location.getLocationId());
