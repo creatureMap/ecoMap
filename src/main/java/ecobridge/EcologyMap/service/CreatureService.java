@@ -36,7 +36,7 @@ public class CreatureService {
 
     }
 
-
+    // mainCategoryId를 이용한 생물 조회 -> 지도상에서 카테고리 버튼 (1or2) 를 누르게 됐을 때 카테고리에 해당되는 생물 정보 전달
     public List<CreatureDTO> getCategoryCreatureLocations(Long mainCategoryId) {
         List<CreatureLocation> locations = creatureLocationRepository.findAll();
         locations = locations.stream().filter(location ->
@@ -46,6 +46,7 @@ public class CreatureService {
         return creatureDTOs;
     }
 
+    // mainCategoryId, detailCategoryId 2개를 이용한 생물 조회 -> 2단게를 거친 카테고리 생물 정보 전달
     public List<CreatureDTO> getDetailCategoryCreatureLocations(Long mainCategoryId, Long detailCategoryId) {
         List<CreatureLocation> locations = creatureLocationRepository.findAll();
         locations = locations.stream()
@@ -57,7 +58,8 @@ public class CreatureService {
         return creatureDTOs;
     }
 
-    public List<CreatureLocationDTO> getSearchCreatureDetails(String creatureName) {
+    // 생물 이름을 이용한 검색 조회 기능 -> 생물 이름을 검색하면 그에 해당되는 생물의 정보 전달
+    public List<CreatureLocationDTO> SearchCreatureDetails(String creatureName) {
         List<CreatureLocation> locations = creatureLocationRepository.findAll();
         locations = locations.stream()
                 .filter(location -> location.getCreature().getCreatureName().equals(creatureName))
@@ -67,7 +69,8 @@ public class CreatureService {
         return creatureLocationDTOs;
     }
 
-    public List<CreatureDTO> getSearchDetailCategory(String detailCategoryName) {
+    // detailCategoryName 을 이용한 검색 조회 기능 -> 카테고리 이름을 검색하면 그에 해당되는 생물들의 정보 전달
+    public List<CreatureDTO> SearchDetailCategory(String detailCategoryName) {
         List<CreatureLocation> locations = creatureLocationRepository.findAll();
         locations = locations.stream().filter(location ->
                 location.getCreature().getDetailCategory().getDetailCategoryName().equals(detailCategoryName)).collect(Collectors.toList());
