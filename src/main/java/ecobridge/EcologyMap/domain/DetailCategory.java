@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,12 +16,16 @@ public class DetailCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Category_id")
-    private Long categoryId;
+    @Column(name="detail_category_id")
+    private Long detailCategoryId;
 
-    @Column(name="Category_name")
-    private String categoryName;
+    @Column(name="detail_category_name")
+    private String detailCategoryName;
 
+    @OneToMany(mappedBy = "detailCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Creature> creatures = new ArrayList<>();
 
-
+    public Long getDetailCategoryId() {
+        return detailCategoryId;
+    }
 }

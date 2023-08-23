@@ -60,15 +60,6 @@ public class Creature {
         @Column(name = "winter", nullable = false)
         private boolean winter;
 
-//        @Builder //빌더 패턴으로 객체 생성
-//
-//        public Creature(String creatureInformation, String creatureName, Long creatureProtectionClass, String imageUrl) {
-//            this.creatureInformation = creatureInformation;
-//            this.creatureName = creatureName;
-//            this.creatureProtectionClass = creatureProtectionClass;
-//            this.imageUrl = imageUrl;
-//
-//
-//    }
+
 }
 

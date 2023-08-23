@@ -49,4 +49,23 @@ public class CreatureController {
         List<CreatureDTO> creatureDTOs = creatureService.getCategoryCreatureLocations(mainCategoryId);
         return ResponseEntity.ok(creatureDTOs);
     }
+
+    @GetMapping("/creatures/{mainCategoryId}/{detailCategoryId}")
+    public ResponseEntity<List<CreatureDTO>> getDetailCategoryCreatureLocations(@PathVariable Long mainCategoryId,
+                                                                                @PathVariable Long detailCategoryId) {
+        List<CreatureDTO> creatureDTOs = creatureService.getDetailCategoryCreatureLocations(mainCategoryId, detailCategoryId);
+        return ResponseEntity.ok(creatureDTOs);
+    }
+
+    @GetMapping("/creatures/SearchName/{creatureName}")
+    public ResponseEntity<List<CreatureLocationDTO>> getSearchCreatureDetails(@PathVariable String creatureName){
+        List<CreatureLocationDTO> creatureLocationDTOS = creatureService.getSearchCreatureDetails(creatureName);
+        return ResponseEntity.ok(creatureLocationDTOS);
+    }
+
+    @GetMapping("/creatures/SearchDetailCategoryName/{detailCategoryName}")
+    public ResponseEntity<List<CreatureDTO>> getSearchDetailCategory(@PathVariable String detailCategoryName){
+        List<CreatureDTO> creatureDTOS = creatureService.getSearchDetailCategory(detailCategoryName);
+        return ResponseEntity.ok(creatureDTOS);
+    }
 }

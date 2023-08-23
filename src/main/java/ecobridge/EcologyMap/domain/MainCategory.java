@@ -11,28 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter@Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MainCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="main_category_id", updatable = false)
+    @Column(name="main_category_id", nullable = false)
     private Long mainCategoryId;
 
     @Column(name="main_category_name", nullable = false)
     private String mainCategoryName;
 
+    @OneToMany(mappedBy = "mainCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Creature> creatures = new ArrayList<>();
 
-    public Long getMain_category_id() {
+    public Long getMainCategoryId() {
         return mainCategoryId;
     }
-
-    public void setMain_category_id(Long mainCategoryId) {
-        this.mainCategoryId = mainCategoryId;
-    }
-
-
-
 }
 
