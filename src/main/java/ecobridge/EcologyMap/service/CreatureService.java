@@ -59,7 +59,7 @@ public class CreatureService {
     }
 
     // 생물 이름을 이용한 검색 조회 기능 -> 생물 이름을 검색하면 그에 해당되는 생물의 정보 전달
-    public List<CreatureLocationDTO> SearchCreatureDetails(String creatureName) {
+    public List<CreatureLocationDTO> getSearchCreatureDetails(String creatureName) {
         List<CreatureLocation> locations = creatureLocationRepository.findAll();
         locations = locations.stream()
                 .filter(location -> location.getCreature().getCreatureName().equals(creatureName))
@@ -70,7 +70,7 @@ public class CreatureService {
     }
 
     // detailCategoryName 을 이용한 검색 조회 기능 -> 카테고리 이름을 검색하면 그에 해당되는 생물들의 정보 전달
-    public List<CreatureDTO> SearchDetailCategory(String detailCategoryName) {
+    public List<CreatureDTO> getSearchDetailCategory(String detailCategoryName) {
         List<CreatureLocation> locations = creatureLocationRepository.findAll();
         locations = locations.stream().filter(location ->
                 location.getCreature().getDetailCategory().getDetailCategoryName().equals(detailCategoryName)).collect(Collectors.toList());
