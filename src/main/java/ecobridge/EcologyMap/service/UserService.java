@@ -28,4 +28,14 @@ public class UserService implements UserDetailsService {
                 .password(bCryptPasswordEncoder.encode(dto.getPassword())) //빈을 사용한 패스워드 암호화
                 .build()).getId();
     }
+
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
+
+    public User findByRefreshToken(String refreshToken) {
+        return userRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected token"));
+    }
 }

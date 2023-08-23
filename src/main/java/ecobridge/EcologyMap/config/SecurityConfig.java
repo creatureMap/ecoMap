@@ -2,9 +2,11 @@ package ecobridge.EcologyMap.config;
 
 import ecobridge.EcologyMap.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,17 +35,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests((auth) -> auth
-                    .anyRequest().authenticated()
-            ).httpBasic(withDefaults());
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() //정적 리소스 접근 허용
+                    .requestMatchers("/","/user","/login").permitAll()
+            ).formLogin(login -> login.disable());
         return http.build();
     }
 
     //인증 관리자 관련 설정
     @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration
-    ) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
