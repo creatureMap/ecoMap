@@ -30,8 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'javax.xml.bind:jaxb-api:2.3.1' //XML 문서와 JAVA 객체 간 매핑 자동화
 	implementation 'mysql:mysql-connector-java:8.0.31' //mysql
-	implementation 'io.jsonwebtoken:jjwt:0.9.1' // 버전은 최신 버전으로 대체 가능
-
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 //	runtimeOnly 'com.h2database:h2'
@@ -40,12 +39,6 @@ dependencies {
 	testImplementation 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testAnnotationProcessor 'org.projectlombok:lombok'
-
-
-
-
-
-
 }
 
 tasks.named('test') {
