@@ -33,7 +33,6 @@ public class UserController {
     public ResponseEntity<UserDTO> createNewAccessToken(
             @RequestBody UserDTO request) {
         String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
-        System.out.println(newAccessToken);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new UserDTO("hi","hello","hihi",newAccessToken));

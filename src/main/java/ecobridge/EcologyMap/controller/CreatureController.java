@@ -1,18 +1,19 @@
 package ecobridge.EcologyMap.controller;
 
 
-import ecobridge.EcologyMap.domain.Creature;
 import ecobridge.EcologyMap.domain.CreatureLocation;
 import ecobridge.EcologyMap.dto.CreatureDTO;
+import ecobridge.EcologyMap.dto.CreatureDetailDTO;
 import ecobridge.EcologyMap.dto.CreatureLocationDTO;
 import ecobridge.EcologyMap.repository.CreatureRepository;
 import ecobridge.EcologyMap.service.CreatureService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,12 +38,17 @@ public class CreatureController {
 
 
     @GetMapping("/creatures/detail/{id}")
-    public ResponseEntity<CreatureLocation> getCreatureDetail(@PathVariable long id){
+    public ResponseEntity<CreatureDetailDTO> getCreatureDetail(@PathVariable long id) {
         CreatureLocation creatureLocation = creatureService.findCreatureDetail(id);
 
-        return ResponseEntity.ok()
-                .body(creatureLocation);
+        if (creatureLocation != null) {
+            CreatureDetailDTO creatureDetailDTO = CreatureDetailDTO.of(creatureLocation);
+            return ResponseEntity.ok().body(creatureDetailDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     @GetMapping("/creatures/{mainCategoryId}")
     public ResponseEntity<List<CreatureDTO>> getCategoryCreatureLocations(@PathVariable long mainCategoryId) {
@@ -61,5 +67,12 @@ public class CreatureController {
     public ResponseEntity<List<CreatureLocationDTO>> getSearchCreatureDetails(@PathVariable String creatureName){
         List<CreatureLocationDTO> creatureLocationDTOS = creatureService.getSearchCreatureDetails(creatureName);
         return ResponseEntity.ok(creatureLocationDTOS);
+    }
+
+
+    @GetMapping("/creatures/SearchDetailCategoryName/{detailCategoryName}")
+    public ResponseEntity<List<CreatureDTO>> getSearchDetailCategory(@PathVariable String detailCategoryName){
+        List<CreatureDTO> creatureDTOS = creatureService.getSearchDetailCategory(detailCategoryName);
+        return ResponseEntity.ok(creatureDTOS);
     }
 }
