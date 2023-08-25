@@ -2,7 +2,7 @@ package ecobridge.EcologyMap.controller;
 
 //회원가입 및 로그인
 
-import ecobridge.EcologyMap.dto.AddUserRequest;
+import ecobridge.EcologyMap.dto.UserDTO;
 import ecobridge.EcologyMap.service.TokenService;
 import ecobridge.EcologyMap.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,12 +30,13 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<AddUserRequest> createNewAccessToken(
-            @RequestBody AddUserRequest request) {
+    public ResponseEntity<UserDTO> createNewAccessToken(
+            @RequestBody UserDTO request) {
         String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
+        System.out.println(newAccessToken);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new AddUserRequest());
+                .body(new UserDTO("hi","hello","hihi",newAccessToken));
     }
 
     @GetMapping("/logout")

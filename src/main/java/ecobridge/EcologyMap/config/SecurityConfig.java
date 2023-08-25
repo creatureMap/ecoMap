@@ -8,18 +8,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 //인증 처리를 하는 설정 파일
 @Configuration
 @EnableWebSecurity //Security의 세부 설정을 조작
+@EnableMethodSecurity //메소드 보안 활성화
 @RequiredArgsConstructor //생성자 처리를 간단하게
-public class SecurityConfig {
+public class SecurityConfig{
 
     private final UserService userService;
 
@@ -37,8 +42,11 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() //정적 리소스 접근 허용
-                    .requestMatchers("/","/user","/login").permitAll()
-            ).formLogin(login -> login.disable());
+                    .anyRequest().permitAll()
+            ).formLogin(login -> login
+                        .loginPage("/user/login")
+                        .loginProcessingUrl("/"));
+
         return http.build();
     }
 

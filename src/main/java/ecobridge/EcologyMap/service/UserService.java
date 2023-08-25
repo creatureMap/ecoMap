@@ -1,7 +1,7 @@
 package ecobridge.EcologyMap.service;
 
 import ecobridge.EcologyMap.domain.User;
-import ecobridge.EcologyMap.dto.AddUserRequest;
+import ecobridge.EcologyMap.dto.UserDTO;
 import ecobridge.EcologyMap.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
     }
 
     //객체를 인수로 받는 회원 정보 추가 메서드
-    public Long save(AddUserRequest dto) {
+    public Long save(UserDTO dto) {
         return userRepository.save(User.builder()
                 .username(dto.getUsername())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword())) //빈을 사용한 패스워드 암호화
