@@ -2,12 +2,14 @@ package ecobridge.EcologyMap.controller;
 
 //회원가입 및 로그인
 
+import ecobridge.EcologyMap.domain.User;
 import ecobridge.EcologyMap.dto.UserDTO;
-import ecobridge.EcologyMap.service.TokenService;
 import ecobridge.EcologyMap.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
-    private final TokenService tokenService;
 
     @GetMapping("/login")
     public String login() {
@@ -30,12 +31,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserDTO> createNewAccessToken(
-            @RequestBody UserDTO request) {
-        String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new UserDTO("hi","hello","hihi",newAccessToken));
+    public ResponseEntity<String> createUser(@RequestBody UserDTO request) {
+        try{
+            userService.save(request);
+            return ResponseEntity.ok("success");
+        }
+        catch(Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/logout")
