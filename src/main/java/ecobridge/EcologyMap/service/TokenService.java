@@ -1,4 +1,4 @@
-package ecobridge.EcologyMap.service;
+/*package ecobridge.EcologyMap.service;
 
 import ecobridge.EcologyMap.config.jwt.TokenProvider;
 import ecobridge.EcologyMap.domain.User;
@@ -24,3 +24,4 @@ public class TokenService {
         return tokenProvider.generateToken(user, Duration.ofHours(2));
     }
 }
+*/

@@ -10,15 +10,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+//유저 정보를 가져오는 인터페이스
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override //사용자 아이디로 사용자의 정보를 가져오는 메서드
+    //사용자 아이디로 사용자의 정보를 가져오는 메서드
+    @Override
     public User loadUserByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException(username));
     }
 
     //객체를 인수로 받는 회원 정보 추가 메서드
@@ -32,11 +34,6 @@ public class UserService implements UserDetailsService {
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
-    }
-
-    public User findByRefreshToken(String refreshToken) {
-        return userRepository.findByRefreshToken(refreshToken)
-                .orElseThrow(() -> new IllegalArgumentException("Unexpected token"));
     }
 }
 
