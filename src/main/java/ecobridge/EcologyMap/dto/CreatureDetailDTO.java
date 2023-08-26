@@ -22,6 +22,11 @@ public class CreatureDetailDTO { // 생물의 위치 정보를 전달하기 위�
     private boolean summer;
     private boolean fall;
     private boolean winter;
+    private String mainCategoryName;
+    private String detailCategoryName;
+    private String locatioName;
+    private String creatureInformation;
+
 
 
 
@@ -33,11 +38,14 @@ public class CreatureDetailDTO { // 생물의 위치 정보를 전달하기 위�
                 .creatureLongitude(location.getCreatureLongitude())
                 .locationId(location.getLocationId())
                 .mainCategoryId(location.getCreature().getMainCategory().getMainCategoryId())
+                .mainCategoryName(location.getCreature().getMainCategory().getMainCategoryName())
+                .detailCategoryName(location.getCreature().getDetailCategory().getDetailCategoryName())
                 .detailCategoryId(location.getCreature().getDetailCategory().getDetailCategoryId())
                 .creatureProtectionClass(location.getCreature().getCreatureProtectionClass())
                 .imageUrl(location.getCreature().getImageUrl())
                 .creatureName(location.getCreature().getCreatureName())
-
+                .locatioName(location.getLocationName())
+                .creatureInformation(location.getCreature().getCreatureInformation())
 
                 .build();
     }
