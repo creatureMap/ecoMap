@@ -12,7 +12,7 @@ public class CreatureDetailDTO { // 생물의 위치 정보를 전달하기 위�
     private Long creatureId;
     private double creatureLatitude;
     private double creatureLongitude;
-    private Long locationId;
+    private long locationId;
     private Long mainCategoryId;
     private Long detailCategoryId;
     private Long creatureProtectionClass;

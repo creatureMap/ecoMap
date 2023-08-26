@@ -20,8 +20,8 @@ public class CreatureLocation {
     //고유 ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", updatable = false)
-    private Long locationId;
+    @Column(name="location_id")
+    private long locationId;
 
     //위도
     @Column(name="creature_latitude")
