@@ -20,7 +20,7 @@ public class UserService implements UserDetailsService {
     @Override
     public User loadUserByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException(username));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid User!!"));
     }
 
     //객체를 인수로 받는 회원 정보 추가 메서드
@@ -32,8 +32,8 @@ public class UserService implements UserDetailsService {
                 .build()).getId();
     }
 
-    public User findById(Long id) {
-        return userRepository.findById(id)
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
 }
