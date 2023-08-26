@@ -28,6 +28,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(User.builder()
                 .username(dto.getUsername())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword())) //빈을 사용한 패스워드 암호화
+                .email(dto.getEmail())
                 .build()).getId();
     }
 
