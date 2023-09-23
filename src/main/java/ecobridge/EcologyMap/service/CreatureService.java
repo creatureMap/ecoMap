@@ -1,4 +1,5 @@
 package ecobridge.EcologyMap.service;
+
 import ecobridge.EcologyMap.domain.CreatureLocation;
 import ecobridge.EcologyMap.dto.CreatureDTO;
 import ecobridge.EcologyMap.dto.CreatureLocationDTO;
@@ -6,6 +7,7 @@ import ecobridge.EcologyMap.repository.CreatureLocationRepository;
 import ecobridge.EcologyMap.repository.CreatureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,11 +32,12 @@ public class CreatureService {
     }
 
     // creature_location의 ID를 이용해 생물을 조회-> 핀에는 creature_location 정보가 들어있기 때문에 creature가 아닌 creature_location 활용
-    public CreatureLocation findCreatureDetail(long id) {
+    public CreatureLocation findCreatureDetail(long id){
         return creatureLocationRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+                .orElseThrow(()-> new IllegalArgumentException("not found: "+id));
 
     }
+
 
     // mainCategoryId를 이용한 생물 조회 -> 지도상에서 카테고리 버튼 (1or2) 를 누르게 됐을 때 카테고리에 해당되는 생물 정보 전달
     public List<CreatureDTO> getCategoryCreatureLocations(Long mainCategoryId) {

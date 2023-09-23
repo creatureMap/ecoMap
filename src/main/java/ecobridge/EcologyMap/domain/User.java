@@ -1,6 +1,7 @@
 //package ecobridge.EcologyMap.domain;
 //
 //import jakarta.persistence.*;
+//import jakarta.validation.constraints.NotEmpty;
 //import lombok.AccessLevel;
 //import lombok.Builder;
 //import lombok.Getter;
@@ -12,6 +13,8 @@
 //import java.util.Collection;
 //import java.util.List;
 //
+//
+////사용자의 정보를 담는 인터페이스
 //@Table(name= "user")
 //@Entity
 //@Getter
@@ -22,28 +25,21 @@
 //    @Column(name = "id", updatable = false)
 //    private Long id;
 //
-//    @Column(name = "username", unique = true, nullable = false)
+//    @Column(name = "username", unique = true,nullable = false)
 //    private String username;
 //
 //    @Column(name = "password", nullable = false)
 //    private String password;
 //
-//    @Column(name="email", nullable = false)
+//    @Column(name="email")
 //    private String email;
 //
-//    @Column(name = "refresh_token", nullable = false)
-//    private String refreshToken;
-//
-//    public User refreshToken(String refreshToken) {
-//        this.refreshToken = refreshToken;
-//        return this;
-//    }
 //
 //    @Builder
-//    public User(String username, String password, String refreshToken, String auth) {
+//    public User(String username, String password, String email) {
 //        this.username = username;
 //        this.password = password;
-//        this.refreshToken = refreshToken;
+//        this.email = email;
 //    }
 //
 //    @Override //권한 반환

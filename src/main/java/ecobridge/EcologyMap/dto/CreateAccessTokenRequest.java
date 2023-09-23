@@ -5,7 +5,7 @@
 //
 //@Getter
 //@Setter
-//public class AddUserRequest {
-//    private String username;
-//    private String password;
+//public class CreateAccessTokenRequest {
+//    private String refreshToken;
 //}
+//

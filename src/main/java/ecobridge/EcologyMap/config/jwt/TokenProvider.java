@@ -69,6 +69,7 @@
 //        Claims claims = getClaims(token);
 //        return claims.get("id", Long.class);
 //    }
+//
 //    private Claims getClaims(String token) {
 //        return Jwts.parser()
 //                .setSigningKey(jwtProperties.getSecretKey())
