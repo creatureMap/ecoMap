@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 //인증 처리를 하는 설정 파일
 @Configuration
@@ -48,6 +49,10 @@ public class SecurityConfig{
                 .formLogin(login -> login //기본 세큐리티 로그인 페이지 안 씀
                         .loginPage("/user/login")
                         .loginProcessingUrl("/"))
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true ))
                 .csrf(csrf -> csrf.disable());
 
         return http.build();
