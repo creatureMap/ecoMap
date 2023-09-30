@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
 @RestController //HTTP Response Body 에 객체 데이터를 JSON 형싟으로 변환하는 컨트롤러
 @RequestMapping("/api")  // '/api' 로 시작하는 URL 을 처리한다는 의미
 public class CreatureController {
