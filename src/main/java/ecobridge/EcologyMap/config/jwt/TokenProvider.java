@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +22,7 @@ import java.util.Set;
 public class TokenProvider {
 
     private final JwtProperties jwtProperties;
-    private final Key key;
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     //토큰 생성 요소 설정 = 현재 시간과 만료일, 유저 정보를 담음
     public String generateToken(User user, Duration expiredAt) {
