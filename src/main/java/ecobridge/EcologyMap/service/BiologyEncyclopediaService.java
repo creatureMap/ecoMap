@@ -32,6 +32,7 @@ public class BiologyEncyclopediaService {
             dto.setUserId(entry.getUser().getId());
             dto.setCreatureInformation(creature.getCreatureInformation());
             dto.setCreatureSummaryInformation(creature.getCreatureSummaryInformation());
+            dto.setImageUrl(creature.getImageUrl());
 
             biologyEncyclopedias.add(dto);
         }
@@ -52,7 +53,7 @@ public class BiologyEncyclopediaService {
                 dto.setUserId(entry.getUser().getId());
                 dto.setCreatureInformation(creature.getCreatureInformation());
                 dto.setCreatureSummaryInformation(creature.getCreatureSummaryInformation());
-
+                dto.setImageUrl(creature.getImageUrl());
                 biologyEncyclopedias.add(dto);
             }
         }

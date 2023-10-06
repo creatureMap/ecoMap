@@ -16,7 +16,7 @@ public class BiologyEncyclopediaDTO {
     private String detailCategoryName;
     private String creatureInformation;
     private String creatureSummaryInformation;
-
+    private String imageUrl;
     static public BiologyEncyclopediaDTO of(BiologyEncyclopedia biologyEncyclopedia){
         return BiologyEncyclopediaDTO.builder()
                 .userId(biologyEncyclopedia.getUser().getId())
@@ -25,6 +25,7 @@ public class BiologyEncyclopediaDTO {
                 .detailCategoryName(biologyEncyclopedia.getCreature().getDetailCategory().getDetailCategoryName())
                 .creatureInformation(biologyEncyclopedia.getCreature().getCreatureInformation())
                 .creatureSummaryInformation(biologyEncyclopedia.getCreature().getCreatureSummaryInformation())
+                .imageUrl(biologyEncyclopedia.getCreature().getImageUrl())
                 .build();
     }
 }
