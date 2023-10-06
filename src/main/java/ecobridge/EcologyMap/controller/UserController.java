@@ -40,13 +40,13 @@ public class UserController {
     private final TokenService tokenService;
     private final TokenProvider tokenProvider;
 
+    // 로그인 한 정보를 검증, 토큰 발급해서 db에 저장?, 저장된 토큰으로 계속 검증?
     @PostMapping("/login")
-    public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken
-            (@RequestBody CreateAccessTokenRequest request) {
-        String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
+    public String login(@RequestBody Map<String, String> user) {
+        User member = userRepository.findByUsername(user.get("username"))
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않음"));
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new CreateAccessTokenResponse(newAccessToken));
+        return tokenProvider.generateToken(member, Duration.ofHours(2));
     }
 
     @PostMapping("/signup")

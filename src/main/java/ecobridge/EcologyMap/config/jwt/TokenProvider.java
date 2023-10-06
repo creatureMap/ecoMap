@@ -48,8 +48,6 @@ public class TokenProvider {
     //JWT 토큰 유효성 검증
     public boolean validToken(String token) {
         try {
-            System.out.println("Received: "+token);
-
             Jwts.parserBuilder()
                     .setSigningKey(key).build()
                     .parseClaimsJws(token);
