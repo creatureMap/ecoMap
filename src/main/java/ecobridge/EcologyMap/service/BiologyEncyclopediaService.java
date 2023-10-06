@@ -30,6 +30,8 @@ public class BiologyEncyclopediaService {
             dto.setCreatureName(creature.getCreatureName());
             dto.setDetailCategoryName(creature.getDetailCategory().getDetailCategoryName());
             dto.setUserId(entry.getUser().getId());
+            dto.setCreatureInformation(creature.getCreatureInformation());
+            dto.setCreatureSummaryInformation(creature.getCreatureSummaryInformation());
 
             biologyEncyclopedias.add(dto);
         }
@@ -48,6 +50,8 @@ public class BiologyEncyclopediaService {
                 dto.setCreatureName(creature.getCreatureName());
                 dto.setDetailCategoryName(creature.getDetailCategory().getDetailCategoryName());
                 dto.setUserId(entry.getUser().getId());
+                dto.setCreatureInformation(creature.getCreatureInformation());
+                dto.setCreatureSummaryInformation(creature.getCreatureSummaryInformation());
 
                 biologyEncyclopedias.add(dto);
             }
