@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -19,15 +20,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 //인증 처리를 하는 설정 파일
 @Configuration
 @EnableWebSecurity //Security의 세부 설정을 조작
 @EnableMethodSecurity //메소드 보안 활성화
 @RequiredArgsConstructor //생성자 처리를 간단하게
 public class SecurityConfig{
-
-    private final UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //스프링 시큐리티 기능 정적 리소스에 비활성화
     @Bean
@@ -53,6 +53,7 @@ public class SecurityConfig{
                         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true ))
+                .httpBasic(withDefaults())
                 .csrf(csrf -> csrf.disable());
 
         return http.build();
