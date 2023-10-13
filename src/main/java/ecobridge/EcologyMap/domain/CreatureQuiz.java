@@ -1,19 +1,19 @@
 package ecobridge.EcologyMap.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+
+@Data
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreatureQuiz{
 
-    //생물 ID
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    //생물 ID
     @OneToOne
     @JoinColumn(name = "creature_id")
     private Creature creature;
@@ -42,15 +42,15 @@ public class CreatureQuiz{
     @Column(name = "quiz3Answer", nullable = false)
     private Byte quiz3Answer;
 
-    //퀴즈1
+    //퀴즈1 해설
     @Column(name = "quiz1Solution", nullable = false)
     private String quiz1Solution;
 
-    //퀴즈2
+    //퀴즈2 해설
     @Column(name = "quiz2Solution", nullable = false)
     private String quiz2Solution;
 
-    //퀴즈3
+    //퀴즈3 해설
     @Column(name = "quiz3Solution", nullable = false)
     private String quiz3Solution;
 }
