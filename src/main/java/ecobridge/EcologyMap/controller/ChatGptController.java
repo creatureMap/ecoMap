@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.CacheRequest;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ import java.util.List;
 @Controller
 public class ChatGptController {
 
-    private CreatureRepository creatureRepository;
+    private final CreatureRepository creatureRepository;
 
     @Value("${chatGpt.key}")
     private String key;
@@ -50,16 +49,13 @@ public class ChatGptController {
 
         ArrayList<Message> list = new ArrayList<>();
 
-        // creatureId에 따른 정보 검색 후 시스템 메세지 추가
         Creature creature = creatureRepository.findById(creatureId)
                 .orElseThrow(() -> new IllegalArgumentException("Creation not found " + creatureId));
 
-        list.add(new Message("system", "You are an assisntant that knows about this creature: " + creature.getCreatureInformation()));
+        list.add(new Message("system", "You are an assistant that knows about this creature: " + creature.getCreatureInformation()));
         list.add(new Message("system", "You're explaining to a child, so please use gentle language and introduce yourself as if you were the creature."));
         list.add(new Message("system", "Please respond in Korean."));
-
-        // 사용자의 메세지 추가
-        list.add(new Message("user",message));
+        list.add(new Message("user", message));
 
         Body body = new Body("gpt-3.5-turbo", list);
 
@@ -67,7 +63,6 @@ public class ChatGptController {
 
         ResponseEntity<ChatResponse> responseEntity = restTemplate.exchange(httpEntity, ChatResponse.class);
 
-        // ChatGPT 응답을 요약
         ChatResponse chatResponse = responseEntity.getBody();
         String summarizedResponse = summarizeResponse(chatResponse.getChoices());
 
@@ -76,8 +71,6 @@ public class ChatGptController {
 
     private String summarizeResponse(List<ChatResponse.Choice> choices) {
         StringBuilder summary = new StringBuilder();
-
-        // 선택된 메시지 중에서 처음 3문장을 요약에 포함
         int sentenceCount = 0;
         for (ChatResponse.Choice choice : choices) {
             String content = choice.getMessage().getContent();
@@ -113,5 +106,4 @@ public class ChatGptController {
         String role;
         String content;
     }
-
 }
