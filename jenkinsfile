@@ -24,7 +24,7 @@ pipeline {
                         $class: 'UsernamePasswordMultiBinding',
                         credentialsId: 'dockerhub_credentials',
                         usernameVariable: 'm1nddoong',   // Docker Hub 계정 ID
-                        passwordVariable: 'dckr_pat_LIULgF9TmYBeQb-ojqco2bs0dSI'  // Access Token
+                        passwordVariable: 'ecomap2023@'
                     ]]) {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
                         sh "docker push m1nddoong/ecology_map" // Docker Hub Repository 경로 설정
