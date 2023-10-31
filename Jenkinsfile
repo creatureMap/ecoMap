@@ -39,25 +39,7 @@ pipeline {
             script {
                 echo 'Build and push to Docker Hub succeeded!'
 
-                // 여기에 빌드 성공 시 수행할 추가 작업 추가 가능
-            }
-        }
-        failure {
-            script {
-                echo 'Build or push to Docker Hub failed!'
-
-                // 여기에 빌드 실패 시 수행할 추가 작업 추가 가능
-            }
-        }
-    }
-
-    environment {
-        CLEANUP_THRESHOLD = 5
-    }
-
-    post {
-        always {
-            script {
+                // 빌드 성공 시 수행할 추가 작업 추가 가능
                 def images = sh(script: 'docker images -q m1nddoong/ecology_map', returnStdout: true).trim().split('\n')
                 if (images.size() > env.CLEANUP_THRESHOLD.toInteger()) {
                     def oldImages = images[0..(images.size() - env.CLEANUP_THRESHOLD)].join(' ')
@@ -65,5 +47,16 @@ pipeline {
                 }
             }
         }
+        failure {
+            script {
+                echo 'Build or push to Docker Hub failed!'
+
+                // 빌드 실패 시 수행할 추가 작업 추가 가능
+            }
+        }
+    }
+
+    environment {
+        CLEANUP_THRESHOLD = 5
     }
 }
