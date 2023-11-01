@@ -16,7 +16,13 @@ pipeline {
                     def project = 'ecomap'
                     def dockerImage = "gcr.io/hazel-math-398908/$project:${env.BUILD_ID}"
 
-                    sh "docker build -t $dockerImage -f Dockerfile ."
+                    // Check if the Docker image already exists, then build it
+                    def dockerImageExists = sh(script: "docker images -q $dockerImage", returnStatus: true) == 0
+                    if (!dockerImageExists) {
+                        sh "docker build -t $dockerImage -f Dockerfile ."
+                    } else {
+                        echo "Docker image $dockerImage already exists. Skipping build."
+                    }
 
                     withCredentials([[
                         $class: 'UsernamePasswordMultiBinding',
@@ -25,7 +31,7 @@ pipeline {
                         passwordVariable: 'ecomap2023@'
                     ]]) {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
-                        sh "docker push m1nddoong/ecology_map"
+                        sh "docker push $dockerImage"
                     }
                 }
             }
@@ -37,7 +43,8 @@ pipeline {
             script {
                 echo 'Build and push to Docker Hub succeeded!'
 
-                def images = sh(script: 'docker images -q m1nddoong/ecology_map', returnStdout: true).trim().split('\n')
+                // Removing old Docker images after successful build and push
+                def images = sh(script: "docker images -q gcr.io/hazel-math-398908/ecomap", returnStdout: true).trim().split('\n')
                 if (images.size() > env.CLEANUP_THRESHOLD.toInteger()) {
                     def oldImages = images[0..(images.size() - env.CLEANUP_THRESHOLD)].join(' ')
                     sh "docker rmi $oldImages"
