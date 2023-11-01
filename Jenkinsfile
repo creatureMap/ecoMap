@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     def project = 'ecomap'
-                    def dockerImage = "gcr.io/hazel-math-398908/$project:${env.BUILD_ID}"
+                    def dockerImage = "m1nddoong/ecology_map:${env.BUILD_ID}"
 
                     // Check if the Docker image already exists, then build it
                     def dockerImageExists = sh(script: "docker images -q $dockerImage", returnStatus: true) == 0
