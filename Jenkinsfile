@@ -27,8 +27,8 @@ pipeline {
                     withCredentials([[
                         $class: 'UsernamePasswordMultiBinding',
                         credentialsId: 'dockerhub_credentials',
-                        usernameVariable: 'alstjsdlr990321@gmail.com',
-                        passwordVariable: 'ecomap2023@'
+                        usernameVariable: 'DOCKERHUB_USERNAME',  // Set Docker Hub username variable
+                        passwordVariable: 'DOCKERHUB_PASSWORD'   // Set Docker Hub password variable
                     ]]) {
                         sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
                         sh "docker push $dockerImage"
