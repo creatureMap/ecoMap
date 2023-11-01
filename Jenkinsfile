@@ -13,7 +13,7 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 script {
-                    def project = 'ecoMap'
+                    def project = 'ecomap'
                     def dockerImage = "gcr.io/hazel-math-398908/$project:${env.BUILD_ID}"
 
                     sh "docker build -t $dockerImage -f Dockerfile ."
