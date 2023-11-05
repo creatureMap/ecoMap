@@ -2,6 +2,7 @@ package ecobridge.EcologyMap.controller;
 
 //회원가입 및 로그인
 
+import ecobridge.EcologyMap.domain.BiologyEncyclopedia;
 import ecobridge.EcologyMap.domain.User;
 import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
 import ecobridge.EcologyMap.dto.UserDTO;
@@ -22,6 +23,8 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 
 @RequiredArgsConstructor
 @RestController
@@ -66,4 +69,24 @@ public class UserController {
     public List<BiologyEncyclopediaDTO> getUserCreaturesByDetailCategoryName(@PathVariable Long userId, @PathVariable String detailCategoryName){
         return biologyEncyclopediaService.getUserCreaturesByDetailCategoryName(userId,detailCategoryName);
     }
+
+    //사용자 도감에 생물을 추가하는 api
+    @PostMapping("/{userId}/Encyclopedia/{creatureId}/{correctAnswers}")
+    public ResponseEntity<Boolean> addCreatureToUser(@PathVariable Long userId, @PathVariable Long creatureId, @PathVariable int correctAnswers) {
+        if(correctAnswers >= 2) {
+
+            try {
+                BiologyEncyclopedia biology = biologyEncyclopediaService.addUserCreature(userId, creatureId);
+                return ResponseEntity.ok(biology != null);
+            } catch (Exception e) {
+                logger.error("Failed to add creature to user's encyclopedia", e);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+            }
+        }
+        else {
+            return ResponseEntity.ok(false);
+        }
+    }
+
+
 }
