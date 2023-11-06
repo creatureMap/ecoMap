@@ -5,6 +5,7 @@ package ecobridge.EcologyMap.controller;
 import ecobridge.EcologyMap.domain.BiologyEncyclopedia;
 import ecobridge.EcologyMap.domain.User;
 import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
+import ecobridge.EcologyMap.dto.UserCreatureDTO;
 import ecobridge.EcologyMap.dto.UserDTO;
 import ecobridge.EcologyMap.service.BiologyEncyclopediaService;
 import ecobridge.EcologyMap.service.UserService;
@@ -71,12 +72,12 @@ public class UserController {
     }
 
     //사용자 도감에 생물을 추가하는 api
-    @PostMapping("/{userId}/Encyclopedia/{creatureId}/{correctAnswers}")
-    public ResponseEntity<Boolean> addCreatureToUser(@PathVariable Long userId, @PathVariable Long creatureId, @PathVariable int correctAnswers) {
-        if(correctAnswers >= 2) {
+    @PostMapping("/addEncyclopedia")
+    public ResponseEntity<Boolean> addCreatureToUser(@RequestBody UserCreatureDTO info) {
+        if(info.getCorrectAnswers() >= 2) {
 
             try {
-                BiologyEncyclopedia biology = biologyEncyclopediaService.addUserCreature(userId, creatureId);
+                BiologyEncyclopedia biology = biologyEncyclopediaService.addUserCreature(info.getUserId(), info.getCreatureId());
                 return ResponseEntity.ok(biology != null);
             } catch (Exception e) {
                 logger.error("Failed to add creature to user's encyclopedia", e);
