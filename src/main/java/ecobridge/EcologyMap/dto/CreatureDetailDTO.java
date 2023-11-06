@@ -25,7 +25,7 @@ public class CreatureDetailDTO { // 생물의 위치 정보를 전달하기 위�
     private String detailCategoryName;
     private String locatioName;
     private String creatureInformation;
-
+    private String creatureSummaryInformation;
 
 
 
@@ -45,6 +45,7 @@ public class CreatureDetailDTO { // 생물의 위치 정보를 전달하기 위�
                 .creatureName(location.getCreature().getCreatureName())
                 .locatioName(location.getLocationName())
                 .creatureInformation(location.getCreature().getCreatureInformation())
+                .creatureSummaryInformation(location.getCreature().getCreatureSummaryInformation())
 
                 .build();
     }

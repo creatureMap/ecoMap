@@ -1,13 +1,9 @@
 package ecobridge.EcologyMap.service;
 
 import ecobridge.EcologyMap.domain.User;
-import ecobridge.EcologyMap.dto.CreateAccessTokenRequest;
 import ecobridge.EcologyMap.dto.UserDTO;
 import ecobridge.EcologyMap.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -6,6 +6,7 @@ import ecobridge.EcologyMap.config.jwt.TokenProvider;
 import ecobridge.EcologyMap.domain.User;
 import ecobridge.EcologyMap.dto.UserDTO;
 import ecobridge.EcologyMap.repository.UserRepository;
+import ecobridge.EcologyMap.service.TokenService;
 import ecobridge.EcologyMap.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,9 +18,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.Duration;
 import java.util.Map;
+import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
+import ecobridge.EcologyMap.service.BiologyEncyclopediaService;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,6 +33,8 @@ public class UserController {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final TokenProvider tokenProvider;
+    private final BiologyEncyclopediaService biologyEncyclopediaService;
+    private final TokenService tokenService;
 
     // 토큰 발급해서 db에 저장, 저장된 토큰으로 계속 검증..........
     @PostMapping("/login")
@@ -41,7 +46,12 @@ public class UserController {
             return ResponseEntity.badRequest().body("잘못된 비밀번호 입니다.");
         }
 
-         return ResponseEntity.ok(tokenProvider.generateToken(member, Duration.ofHours(2)));
+        Long userId = member.getId();
+        String token = tokenProvider.generateToken(member, Duration.ofHours(2));
+
+        tokenService.save(userId,token);
+
+         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/signup")
@@ -60,5 +70,16 @@ public class UserController {
         new SecurityContextLogoutHandler().logout(request, response,
                 SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/";
+    }
+
+    //사용자에 따라서 발견한 생물들의 정보를 확인하는 api
+    @GetMapping("/{userId}/Encyclopedia")
+    public List<BiologyEncyclopediaDTO> getUserCreatures(@PathVariable Long userId) {
+        return biologyEncyclopediaService.getUserCreatures(userId);
+    }
+    //사용자에 따라서 발견한 생물들의 카테고리를 지정해서 정보를 확인하는 api
+    @GetMapping("/{userId}/Encyclopedia/{detailCategoryName}")
+    public List<BiologyEncyclopediaDTO> getUserCreaturesByDetailCategoryName(@PathVariable Long userId, @PathVariable String detailCategoryName){
+        return biologyEncyclopediaService.getUserCreaturesByDetailCategoryName(userId,detailCategoryName);
     }
 }
