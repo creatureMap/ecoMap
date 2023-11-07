@@ -50,7 +50,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Map<String, String> user) {
         User member = userRepository.findByUsername(user.get("username"))
-                .orElseThrow(() -> new IllegalArgumentException("가입하지 않은 사용자입니다."));
+                .orElseThrow(() ->  new IllegalArgumentException("가입하지 않은 사용자입니다."));
 
         if(!bCryptPasswordEncoder.matches(user.get("password"), member.getPassword())) {
             return ResponseEntity.badRequest().body("잘못된 비밀번호 입니다.");
@@ -59,8 +59,10 @@ public class UserController {
         Long userId = member.getId();
         String token = tokenProvider.generateToken(member, Duration.ofHours(2));
 
+        // db에 저장
         tokenService.save(userId,token);
 
+        //만든 token body로 보내주기
          return ResponseEntity.ok(token);
     }
 
@@ -87,6 +89,7 @@ public class UserController {
     public List<BiologyEncyclopediaDTO> getUserCreatures(@PathVariable Long userId) {
         return biologyEncyclopediaService.getUserCreatures(userId);
     }
+
     //사용자에 따라서 발견한 생물들의 카테고리를 지정해서 정보를 확인하는 api
     @GetMapping("/{userId}/Encyclopedia/{detailCategoryName}")
     public List<BiologyEncyclopediaDTO> getUserCreaturesByDetailCategoryName(@PathVariable Long userId, @PathVariable String detailCategoryName){
