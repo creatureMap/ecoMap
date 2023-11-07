@@ -1,7 +1,6 @@
 package ecobridge.EcologyMap.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,10 +24,10 @@ public class User implements UserDetails {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "username", unique = true,nullable = false)
+    @Column(name = "username", unique = true, length = 11, nullable = false)
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", length = 100, nullable = false)
     private String password;
 
     @Column(name="email")

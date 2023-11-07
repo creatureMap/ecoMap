@@ -2,27 +2,34 @@ package ecobridge.EcologyMap.controller;
 
 //회원가입 및 로그인
 
+
 import ecobridge.EcologyMap.domain.BiologyEncyclopedia;
 import ecobridge.EcologyMap.domain.User;
 import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
 import ecobridge.EcologyMap.dto.UserCreatureDTO;
+
+import ecobridge.EcologyMap.config.jwt.TokenProvider;
+import ecobridge.EcologyMap.domain.User;
+
 import ecobridge.EcologyMap.dto.UserDTO;
-import ecobridge.EcologyMap.service.BiologyEncyclopediaService;
+import ecobridge.EcologyMap.repository.UserRepository;
+import ecobridge.EcologyMap.service.TokenService;
 import ecobridge.EcologyMap.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.Duration;
+import java.util.Map;
+import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
+import ecobridge.EcologyMap.service.BiologyEncyclopediaService;
 import java.util.List;
 
 
@@ -33,21 +40,37 @@ import java.util.List;
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final TokenProvider tokenProvider;
+    private final BiologyEncyclopediaService biologyEncyclopediaService;
+    private final TokenService tokenService;
 
-    @Autowired
-    BiologyEncyclopediaService biologyEncyclopediaService;
+    // 토큰 발급해서 db에 저장, 저장된 토큰으로 계속 검증..........
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Map<String, String> user) {
+        User member = userRepository.findByUsername(user.get("username"))
+                .orElseThrow(() -> new IllegalArgumentException("가입하지 않은 사용자입니다."));
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
+        if(!bCryptPasswordEncoder.matches(user.get("password"), member.getPassword())) {
+            return ResponseEntity.badRequest().body("잘못된 비밀번호 입니다.");
+        }
+
+        Long userId = member.getId();
+        String token = tokenProvider.generateToken(member, Duration.ofHours(2));
+
+        tokenService.save(userId,token);
+
+         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<String> createUser(@RequestBody UserDTO request) {
-        try {
+        try{
             userService.save(request);
             return ResponseEntity.ok("success");
-        } catch (Exception e) {
+        }
+        catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -59,7 +82,6 @@ public class UserController {
         return "redirect:/";
     }
 
-
     //사용자에 따라서 발견한 생물들의 정보를 확인하는 api
     @GetMapping("/{userId}/Encyclopedia")
     public List<BiologyEncyclopediaDTO> getUserCreatures(@PathVariable Long userId) {
@@ -70,6 +92,7 @@ public class UserController {
     public List<BiologyEncyclopediaDTO> getUserCreaturesByDetailCategoryName(@PathVariable Long userId, @PathVariable String detailCategoryName){
         return biologyEncyclopediaService.getUserCreaturesByDetailCategoryName(userId,detailCategoryName);
     }
+
 
     //사용자 도감에 생물을 추가하는 api
     @PostMapping("/addEncyclopedia")
