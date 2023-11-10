@@ -28,4 +28,12 @@ public class BiologyEncyclopedia {
 
     @Column(name="found_date")
     private Date foundDate;
+
+    public static BiologyEncyclopedia create(User user, Creature creature, Date foundDate) {
+        BiologyEncyclopedia biology = new BiologyEncyclopedia();
+        biology.setUser(user);
+        biology.setCreature(creature);
+        biology.setFoundDate(foundDate);
+        return biology;
+    }
 }
