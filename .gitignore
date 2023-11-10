@@ -36,6 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-#DBg
-application.properties
+#DB
 application.yml
+application.properties
