@@ -30,7 +30,6 @@ public class SecurityConfig {
                 //.requestMatchers(toH2Console())
                 .requestMatchers("/static/**");
     }
-
     //특정 http 요청에 대한 웹 기반 보안 구성
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
