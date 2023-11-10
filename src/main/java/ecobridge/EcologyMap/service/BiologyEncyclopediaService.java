@@ -53,7 +53,7 @@ public class BiologyEncyclopediaService {
 
         for (BiologyEncyclopedia entry : userEntries) {
             Creature creature = entry.getCreature();
-            if(entry.getCreature().getDetailCategory().getDetailCategoryName().equals(detailCategoryName)) {
+            if (entry.getCreature().getDetailCategory().getDetailCategoryName().equals(detailCategoryName)) {
                 BiologyEncyclopediaDTO dto = new BiologyEncyclopediaDTO();
                 dto.setCreatureId(creature.getCreatureId());
                 dto.setCreatureName(creature.getCreatureName());
