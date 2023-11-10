@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreatureDetailDTO { // 생물의 위치 정보를 전달하기 위한 데이터 전송 객체(DTO)
+public class CreatureDetailDTO {
 
     private Long creatureId;
     private double creatureLatitude;

@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 public class CreatureDTO { // 생물의 위치 정보를 전달하기 위한 데이터 전송 객체(DTO)
 
-    private Long creatureId;
+//    private Long creatureId;
     private double creatureLatitude;
     private double creatureLongitude;
     private Long locationId;
@@ -23,7 +23,7 @@ public class CreatureDTO { // 생물의 위치 정보를 전달하기 위한 데
 
     static public CreatureDTO of(CreatureLocation location){
         return CreatureDTO.builder()
-                .creatureId(location.getCreature().getCreatureId())
+//                .creatureId(location.getCreature().getCreatureId())
                 .creatureLatitude(location.getCreatureLatitude())
                 .creatureLongitude(location.getCreatureLongitude())
                 .locationId(location.getLocationId())
