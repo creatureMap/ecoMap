@@ -1,7 +1,0 @@
-spring:
-  jwt:
-    issuer: psoyeon0127@korea.ac.kr
-    secret_key: eco_bridge
-
-
-
