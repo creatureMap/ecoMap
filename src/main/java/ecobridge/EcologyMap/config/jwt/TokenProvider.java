@@ -5,11 +5,13 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Date;
@@ -20,6 +22,7 @@ import java.util.Set;
 public class TokenProvider {
 
     private final JwtProperties jwtProperties;
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     //토큰 생성 요소 설정 = 현재 시간과 만료일, 유저 정보를 담음
     public String generateToken(User user, Duration expiredAt) {
@@ -38,18 +41,19 @@ public class TokenProvider {
                 .setExpiration(expiry)
                 .setSubject(user.getUsername())
                 .claim("id", user.getId())
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+                .signWith(key)
                 .compact();
     }
 
     //JWT 토큰 유효성 검증
     public boolean validToken(String token) {
         try {
-            Jwts.parser()
-                    .setSigningKey(jwtProperties.getSecretKey())
+            Jwts.parserBuilder()
+                    .setSigningKey(key).build()
                     .parseClaimsJws(token);
             return true;
         } catch (Exception e) { //복호화 과정 에러로, 유효하지 않은 토큰
+            System.out.println("Received Invalid: "+token);
             return false;
         }
     }
@@ -71,8 +75,8 @@ public class TokenProvider {
     }
 
     private Claims getClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(jwtProperties.getSecretKey())
+        return Jwts.parserBuilder()
+                .setSigningKey(key).build()
                 .parseClaimsJws(token)
                 .getBody();
     }
