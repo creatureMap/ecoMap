@@ -38,4 +38,4 @@ out/
 
 #DB
 application.yml
-src/main/resources/application.properties
+application.properties
