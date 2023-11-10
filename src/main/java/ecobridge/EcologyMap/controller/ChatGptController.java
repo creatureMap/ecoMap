@@ -1,6 +1,7 @@
 package ecobridge.EcologyMap.controller;
 
 import ecobridge.EcologyMap.domain.Creature;
+import ecobridge.EcologyMap.dto.ChatResponse;
 import ecobridge.EcologyMap.repository.CreatureRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,7 @@ import java.util.List;
 @Controller
 public class ChatGptController {
 
-    private CreatureRepository creatureRepository;
+    private final CreatureRepository creatureRepository;
 
     @Value("${chatGpt.key}")
     private String key;
@@ -48,24 +49,48 @@ public class ChatGptController {
 
         ArrayList<Message> list = new ArrayList<>();
 
-        // creatureId에 따른 정보 검색 후 시스템 메세지 추가
         Creature creature = creatureRepository.findById(creatureId)
                 .orElseThrow(() -> new IllegalArgumentException("Creation not found " + creatureId));
 
-        list.add(new Message("system", "You are an assisntant that knows about this creature: " + creature.getCreatureInformation()));
+        list.add(new Message("system", "You are an assistant that knows about this creature: " + creature.getCreatureInformation()));
         list.add(new Message("system", "You're explaining to a child, so please use gentle language and introduce yourself as if you were the creature."));
         list.add(new Message("system", "Please respond in Korean."));
-
-        // 사용자의 메세지 추가
-        list.add(new Message("user",message));
-
+        list.add(new Message("user", message));
 
         Body body = new Body("gpt-3.5-turbo", list);
 
         RequestEntity<Body> httpEntity = new RequestEntity<>(body, httpHeaders, HttpMethod.POST, uri);
 
-        ResponseEntity<String> exchange = restTemplate.exchange(httpEntity, String.class);
-        return exchange;
+        ResponseEntity<ChatResponse> responseEntity = restTemplate.exchange(httpEntity, ChatResponse.class);
+
+        ChatResponse chatResponse = responseEntity.getBody();
+        String summarizedResponse = summarizeResponse(chatResponse.getChoices());
+
+        return ResponseEntity.ok(summarizedResponse);
+    }
+
+    private String summarizeResponse(List<ChatResponse.Choice> choices) {
+        StringBuilder summary = new StringBuilder();
+        int sentenceCount = 0;
+        for (ChatResponse.Choice choice : choices) {
+            String content = choice.getMessage().getContent();
+            String[] sentences = content.split("\n");
+
+            for (String sentence : sentences) {
+                if (sentenceCount < 3) {
+                    summary.append(sentence).append("\n");
+                    sentenceCount++;
+                } else {
+                    break;
+                }
+            }
+
+            if (sentenceCount >= 3) {
+                break;
+            }
+        }
+
+        return summary.toString();
     }
 
     @AllArgsConstructor

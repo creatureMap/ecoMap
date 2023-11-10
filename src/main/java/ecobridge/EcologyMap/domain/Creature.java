@@ -28,6 +28,10 @@ public class Creature {
         @Column(name = "creature_information", nullable = false, length=1000)
         private String creatureInformation;
 
+        //생물 요약 정보
+        @Column(name = "creature_summary_information", nullable = false, length=1000)
+        private String creatureSummaryInformation;
+
         //이미지 URL
         @Column(name = "image_url", nullable = false)
         private String imageUrl;
@@ -57,15 +61,6 @@ public class Creature {
         @Column(name = "winter", nullable = false)
         private boolean winter;
 
-        /*@Builder //빌더 패턴으로 객체 생성
 
-        public Creature(String creatureInformation, String creatureName, Long creatureProtectionClass, String imageUrl) {
-            this.creatureInformation = creatureInformation;
-            this.creatureName = creatureName;
-            this.creatureProtectionClass = creatureProtectionClass;
-            this.imageUrl = imageUrl;
-
-
-    }*/
 }
 
