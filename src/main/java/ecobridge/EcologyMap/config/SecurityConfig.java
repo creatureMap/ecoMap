@@ -24,20 +24,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     //스프링 시큐리티 기능 정적 리소스에 비활성화
-//    @Bean
-//    public WebSecurityCustomizer configure() {
-//        return (web) -> web.ignoring()
-//                //.requestMatchers(toH2Console())
-//                .requestMatchers("/static/**");
-//    }
-
-    //임시로 오류가 생겨 내가 수정한 부분
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
-                .requestMatchers(new AntPathRequestMatcher("/static/**"));
+                //.requestMatchers(toH2Console())
+                .requestMatchers("/static/**");
     }
-
     //특정 http 요청에 대한 웹 기반 보안 구성
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
