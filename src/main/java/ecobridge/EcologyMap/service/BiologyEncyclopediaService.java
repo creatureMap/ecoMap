@@ -90,5 +90,4 @@ public class BiologyEncyclopediaService {
             throw new Exception("User or Creature not found");
         }
     }
-
 }

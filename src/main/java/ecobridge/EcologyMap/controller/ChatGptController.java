@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,7 +36,7 @@ public class ChatGptController {
     }
 
     @PostMapping("/send/{creatureId}")
-    public ResponseEntity send(String message, @PathVariable Long creatureId) {
+    public ResponseEntity send(@RequestBody UserMessage userMessage, @PathVariable Long creatureId) {
         RestTemplate restTemplate = new RestTemplate();
 
         URI uri = UriComponentsBuilder
@@ -55,7 +56,7 @@ public class ChatGptController {
         list.add(new Message("system", "You are an assistant that knows about this creature: " + creature.getCreatureInformation()));
         list.add(new Message("system", "You're explaining to a child, so please use gentle language and introduce yourself as if you were the creature."));
         list.add(new Message("system", "Please respond in Korean."));
-        list.add(new Message("user", message));
+        list.add(new Message("user", userMessage.getContent()));
 
         Body body = new Body("gpt-3.5-turbo", list);
 
@@ -104,6 +105,11 @@ public class ChatGptController {
     @Data
     static class Message {
         String role;
+        String content;
+    }
+
+    @Data
+    static class UserMessage {
         String content;
     }
 }

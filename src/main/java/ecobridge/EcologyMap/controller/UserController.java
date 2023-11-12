@@ -3,6 +3,7 @@ package ecobridge.EcologyMap.controller;
 //회원가입 및 로그인
 
 
+<<<<<<< HEAD
 import ecobridge.EcologyMap.domain.BiologyEncyclopedia;
 import ecobridge.EcologyMap.domain.User;
 import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
@@ -11,8 +12,15 @@ import ecobridge.EcologyMap.dto.UserCreatureDTO;
 import ecobridge.EcologyMap.config.jwt.TokenProvider;
 import ecobridge.EcologyMap.domain.User;
 
+=======
+import ecobridge.EcologyMap.config.jwt.TokenProvider;
+import ecobridge.EcologyMap.domain.BiologyEncyclopedia;
+import ecobridge.EcologyMap.domain.User;
+import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
+>>>>>>> 5af3d2de74ebce386a1215c745b2aafb392e9b6f
 import ecobridge.EcologyMap.dto.UserDTO;
 import ecobridge.EcologyMap.repository.UserRepository;
+import ecobridge.EcologyMap.service.BiologyEncyclopediaService;
 import ecobridge.EcologyMap.service.TokenService;
 import ecobridge.EcologyMap.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,11 +34,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.Duration;
-import java.util.Map;
-import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
-import ecobridge.EcologyMap.service.BiologyEncyclopediaService;
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -50,9 +57,9 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Map<String, String> user) {
         User member = userRepository.findByUsername(user.get("username"))
-                .orElseThrow(() ->  new IllegalArgumentException("가입하지 않은 사용자입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("가입하지 않은 사용자입니다."));
 
-        if(!bCryptPasswordEncoder.matches(user.get("password"), member.getPassword())) {
+        if (!bCryptPasswordEncoder.matches(user.get("password"), member.getPassword())) {
             return ResponseEntity.badRequest().body("잘못된 비밀번호 입니다.");
         }
 
@@ -60,19 +67,18 @@ public class UserController {
         String token = tokenProvider.generateToken(member, Duration.ofHours(2));
 
         // db에 저장
-        tokenService.save(userId,token);
+        tokenService.save(userId, token);
 
         //만든 token body로 보내주기
-         return ResponseEntity.ok(token);
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<String> createUser(@RequestBody UserDTO request) {
-        try{
+        try {
             userService.save(request);
             return ResponseEntity.ok("success");
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -92,15 +98,23 @@ public class UserController {
 
     //사용자에 따라서 발견한 생물들의 카테고리를 지정해서 정보를 확인하는 api
     @GetMapping("/{userId}/Encyclopedia/{detailCategoryName}")
-    public List<BiologyEncyclopediaDTO> getUserCreaturesByDetailCategoryName(@PathVariable Long userId, @PathVariable String detailCategoryName){
-        return biologyEncyclopediaService.getUserCreaturesByDetailCategoryName(userId,detailCategoryName);
+    public List<BiologyEncyclopediaDTO> getUserCreaturesByDetailCategoryName(@PathVariable Long userId, @PathVariable String detailCategoryName) {
+        return biologyEncyclopediaService.getUserCreaturesByDetailCategoryName(userId, detailCategoryName);
     }
+
 
 
     //사용자 도감에 생물을 추가하는 api
     @PostMapping("/addEncyclopedia")
     public ResponseEntity<Boolean> addCreatureToUser(@RequestBody UserCreatureDTO info) {
         if(info.getCorrectAnswers() >= 2) {
+
+
+    //사용자 도감에 생물을 추가하는 api
+    @PostMapping("/{userId}/Encyclopedia/{creatureId}/{correctAnswers}")
+    public ResponseEntity<Boolean> addCreatureToUser(@PathVariable Long userId, @PathVariable Long creatureId, @PathVariable int correctAnswers) {
+        if (correctAnswers >= 2) {
+
 
             try {
                 BiologyEncyclopedia biology = biologyEncyclopediaService.addUserCreature(info.getUserId(), info.getCreatureId());
@@ -109,11 +123,9 @@ public class UserController {
                 logger.error("Failed to add creature to user's encyclopedia", e);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
             }
-        }
-        else {
+        } else {
             return ResponseEntity.ok(false);
         }
     }
-
-
 }
+g
