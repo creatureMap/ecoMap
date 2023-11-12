@@ -72,22 +72,30 @@ public class BiologyEncyclopediaService {
         Optional<User> userOptional = userRepository.findById(userId);
         Optional<Creature> creatureOptional = creatureRepository.findById(creatureId);
 
-        if(userOptional.isPresent() && creatureOptional.isPresent()) {
+        if (userOptional.isPresent() && creatureOptional.isPresent()) {
             User user = userOptional.get();
             Creature creature = creatureOptional.get();
 
-            System.out.println("User and Creature found: " + user + ", " + creature);
+            // 해당 유저의 도감에 이미 해당 생물이 있는지 확인
+            boolean isCreatureAdded = biologyEncyclopediaRepository.existsByUserAndCreature(user, creature);
 
-            try {
-                BiologyEncyclopedia biology = BiologyEncyclopedia.create(user, creature, new Date());
-                return biologyEncyclopediaRepository.save(biology);
-            } catch (Exception e) {
-                System.out.println("Failed to save BiologyEncyclopedia: " + e.getMessage());
-                throw e;
+            if (isCreatureAdded) {
+                // 이미 추가된 경우 예외 발생
+                throw new Exception("이미 해당 생물이 도감에 추가되었습니다.");
+            } else {
+                // 추가되지 않은 경우 도감에 생물 추가
+                try {
+                    BiologyEncyclopedia biology = BiologyEncyclopedia.create(user, creature, new Date());
+                    return biologyEncyclopediaRepository.save(biology);
+                } catch (Exception e) {
+                    System.out.println("Failed to save BiologyEncyclopedia: " + e.getMessage());
+                    throw e;
+                }
             }
         } else {
             System.out.println("User or Creature not found");
             throw new Exception("User or Creature not found");
         }
     }
+
 }

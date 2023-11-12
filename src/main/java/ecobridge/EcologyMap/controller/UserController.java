@@ -3,7 +3,7 @@ package ecobridge.EcologyMap.controller;
 //회원가입 및 로그인
 
 
-<<<<<<< HEAD
+
 import ecobridge.EcologyMap.domain.BiologyEncyclopedia;
 import ecobridge.EcologyMap.domain.User;
 import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
@@ -12,12 +12,12 @@ import ecobridge.EcologyMap.dto.UserCreatureDTO;
 import ecobridge.EcologyMap.config.jwt.TokenProvider;
 import ecobridge.EcologyMap.domain.User;
 
-=======
+
 import ecobridge.EcologyMap.config.jwt.TokenProvider;
 import ecobridge.EcologyMap.domain.BiologyEncyclopedia;
 import ecobridge.EcologyMap.domain.User;
 import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
->>>>>>> 5af3d2de74ebce386a1215c745b2aafb392e9b6f
+
 import ecobridge.EcologyMap.dto.UserDTO;
 import ecobridge.EcologyMap.repository.UserRepository;
 import ecobridge.EcologyMap.service.BiologyEncyclopediaService;
@@ -107,24 +107,16 @@ public class UserController {
     //사용자 도감에 생물을 추가하는 api
     @PostMapping("/addEncyclopedia")
     public ResponseEntity<Boolean> addCreatureToUser(@RequestBody UserCreatureDTO info) {
-        if(info.getCorrectAnswers() >= 2) {
-
-
-    //사용자 도감에 생물을 추가하는 api
-    @PostMapping("/{userId}/Encyclopedia/{creatureId}/{correctAnswers}")
-    public ResponseEntity<Boolean> addCreatureToUser(@PathVariable Long userId, @PathVariable Long creatureId, @PathVariable int correctAnswers) {
-        if (correctAnswers >= 2) {
-
-
-            try {
-                BiologyEncyclopedia biology = biologyEncyclopediaService.addUserCreature(info.getUserId(), info.getCreatureId());
-                return ResponseEntity.ok(biology != null);
-            } catch (Exception e) {
-                logger.error("Failed to add creature to user's encyclopedia", e);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+        if (info.getCorrectAnswers() >= 2) {
+                    try {
+                        BiologyEncyclopedia biology = biologyEncyclopediaService.addUserCreature(info.getUserId(), info.getCreatureId());
+                        return ResponseEntity.ok(biology != null);
+                    } catch (Exception e) {
+                        logger.error("Failed to add creature to user's encyclopedia", e);
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+                    }
+                } else {
+                    return ResponseEntity.ok(false);
+                }
             }
-        } else {
-            return ResponseEntity.ok(false);
         }
-    }
-}
