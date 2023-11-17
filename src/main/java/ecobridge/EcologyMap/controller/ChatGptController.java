@@ -90,7 +90,6 @@ public class ChatGptController {
                 break;
             }
         }
-
         return summary.toString();
     }
 
