@@ -95,7 +95,6 @@ public class UserController {
     @PostMapping("/{userId}/Encyclopedia/{creatureId}/{correctAnswers}")
     public ResponseEntity<Boolean> addCreatureToUser(@PathVariable Long userId, @PathVariable Long creatureId, @PathVariable int correctAnswers) {
         if (correctAnswers >= 2) {
-
             try {
                 BiologyEncyclopedia biology = biologyEncyclopediaService.addUserCreature(userId, creatureId);
                 return ResponseEntity.ok(biology != null);

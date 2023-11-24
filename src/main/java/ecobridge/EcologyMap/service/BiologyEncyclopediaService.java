@@ -36,11 +36,11 @@ public class BiologyEncyclopediaService {
             BiologyEncyclopediaDTO dto = new BiologyEncyclopediaDTO();
             dto.setCreatureId(creature.getCreatureId());
             dto.setCreatureName(creature.getCreatureName());
-            dto.setDetailCategoryName(creature.getDetailCategory().getDetailCategoryName());
             dto.setUserId(entry.getUser().getId());
-            dto.setCreatureInformation(creature.getCreatureInformation());
-            dto.setCreatureSummaryInformation(creature.getCreatureSummaryInformation());
             dto.setImageUrl(creature.getImageUrl());
+            dto.setDetailCategoryName(creature.getDetailCategory().getDetailCategoryName());
+//            dto.setCreatureInformation(creature.getCreatureInformation());
+//            dto.setCreatureSummaryInformation(creature.getCreatureSummaryInformation());
 
             biologyEncyclopedias.add(dto);
         }
@@ -59,8 +59,8 @@ public class BiologyEncyclopediaService {
                 dto.setCreatureName(creature.getCreatureName());
                 dto.setDetailCategoryName(creature.getDetailCategory().getDetailCategoryName());
                 dto.setUserId(entry.getUser().getId());
-                dto.setCreatureInformation(creature.getCreatureInformation());
-                dto.setCreatureSummaryInformation(creature.getCreatureSummaryInformation());
+//                dto.setCreatureInformation(creature.getCreatureInformation());
+//                dto.setCreatureSummaryInformation(creature.getCreatureSummaryInformation());
                 dto.setImageUrl(creature.getImageUrl());
                 biologyEncyclopedias.add(dto);
             }
