@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @EntityScan({"ecobridge.EcologyMap.domain"})
 @CrossOrigin
 public class EcologyMapApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(EcologyMapApplication.class, args);
 	}
-
 }

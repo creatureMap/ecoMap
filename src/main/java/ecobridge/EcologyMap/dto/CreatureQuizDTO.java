@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CreatureQuizDTO {
-    private String quiz;
+    private String quiz;g
 }
