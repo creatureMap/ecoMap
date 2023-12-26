@@ -52,9 +52,11 @@ public class ChatGptController {
 
         Creature creature = creatureRepository.findById(creatureId)
                 .orElseThrow(() -> new IllegalArgumentException("Creation not found " + creatureId));
-
+        list.add(new Message("system", creature.getCreatureName()+": Please answer as if you were the creature in question."));
         list.add(new Message("system", "You are an assistant that knows about this creature: " + creature.getCreatureInformation()));
         list.add(new Message("system", "You're explaining to a child, so please use gentle language and introduce yourself as if you were the creature."));
+        list.add(new Message("system",  "Just answer the questions asked. Don't add any more information"));
+        list.add(new Message("system", "Be sure to say just one sentence"));
         list.add(new Message("system", "Please respond in Korean."));
         list.add(new Message("user", userMessage.getContent()));
 
