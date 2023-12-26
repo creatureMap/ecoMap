@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 public class CreatureQuizSolutionDTO {
     private Byte isCorrect; //정답 여부 O=1, X=0
     private String quizSolution; //퀴즈 해설
+    private int correctCount; //정답 개수
+
+
 }
 
 

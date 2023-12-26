@@ -10,13 +10,7 @@ import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
 import ecobridge.EcologyMap.dto.UserCreatureDTO;
 
 import ecobridge.EcologyMap.config.jwt.TokenProvider;
-import ecobridge.EcologyMap.domain.User;
 
-
-import ecobridge.EcologyMap.config.jwt.TokenProvider;
-import ecobridge.EcologyMap.domain.BiologyEncyclopedia;
-import ecobridge.EcologyMap.domain.User;
-import ecobridge.EcologyMap.dto.BiologyEncyclopediaDTO;
 
 import ecobridge.EcologyMap.dto.UserDTO;
 import ecobridge.EcologyMap.repository.UserRepository;
@@ -107,7 +101,7 @@ public class UserController {
     //사용자 도감에 생물을 추가하는 api
     @PostMapping("/addEncyclopedia")
     public ResponseEntity<Boolean> addCreatureToUser(@RequestBody UserCreatureDTO info) {
-        if (info.getCorrectAnswers() >= 2) {
+            if (info.getCorrectCount() >= 2) {
                     try {
                         BiologyEncyclopedia biology = biologyEncyclopediaService.addUserCreature(info.getUserId(), info.getCreatureId());
                         return ResponseEntity.ok(biology != null);
@@ -115,8 +109,9 @@ public class UserController {
                         logger.error("Failed to add creature to user's encyclopedia", e);
                         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
                     }
-                } else {
-                    return ResponseEntity.ok(false);
-                }
             }
+            else {
+                    return ResponseEntity.ok(false);
         }
+    }
+}

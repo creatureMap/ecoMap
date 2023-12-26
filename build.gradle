@@ -45,8 +45,10 @@ dependencies {
 	testImplementation 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testAnnotationProcessor 'org.projectlombok:lombok'
-}
 
+	//Swagger
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2"
+}
 tasks.named('test') {
 	useJUnitPlatform()
 }

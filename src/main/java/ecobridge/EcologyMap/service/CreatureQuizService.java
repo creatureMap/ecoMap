@@ -2,10 +2,9 @@ package ecobridge.EcologyMap.service;
 
 import ecobridge.EcologyMap.domain.CreatureQuiz;
 import ecobridge.EcologyMap.dto.CreatureQuizDTO;
-import ecobridge.EcologyMap.dto.CreatureQuizResponseDTO;
+import ecobridge.EcologyMap.dto.CreatureQuizRequestDTO;
 import ecobridge.EcologyMap.dto.CreatureQuizSolutionDTO;
 import ecobridge.EcologyMap.repository.CreatureQuizRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +24,7 @@ public class CreatureQuizService {
         CreatureQuiz creatureQuiz = creatureQuizRepository.findByCreature_CreatureId(creatureId);
 
         String quiz = "";
-        Byte quizAnswer = null;
-        String quizSolution = "";
+
 
         switch(quizNumber){
             case 1:
@@ -45,16 +43,18 @@ public class CreatureQuizService {
     }
 
     //사용자가 답한 퀴즈의 정답 여부 확인 후 반환
-    public CreatureQuizSolutionDTO checkAnswer(CreatureQuizResponseDTO quizResponse){
+    public CreatureQuizSolutionDTO checkAnswer(CreatureQuizRequestDTO quizRequestDTO){
         CreatureQuizSolutionDTO quizSolution = new CreatureQuizSolutionDTO(); //반환할 객체 생성
-        CreatureQuiz creatureQuiz = creatureQuizRepository.findByCreature_CreatureId(quizResponse.getCreatureId()); //생물의 퀴즈 정보 조회
+        CreatureQuiz creatureQuiz = creatureQuizRepository.findByCreature_CreatureId(quizRequestDTO.getCreatureId()); //생물의 퀴즈 정보 조회
         String quizSolutionString=""; //정답 해설
         byte isCorrect = 0; //정답 여부
-
-        switch(quizResponse.getQuizNumber()){
+        int correctCount = quizRequestDTO.getCorrectCount(); //정답 개수
+        switch(quizRequestDTO.getQuizNumber()){
             case 1:
-                if(creatureQuiz.getQuiz1Answer() == quizResponse.getUserAnswer()){
+                correctCount = 0;
+                if(creatureQuiz.getQuiz1Answer() == quizRequestDTO.getUserAnswer()){
                     isCorrect = 1;
+                    correctCount++;
                 }
                 else{
                     isCorrect = 0;
@@ -62,8 +62,9 @@ public class CreatureQuizService {
                 quizSolutionString = creatureQuiz.getQuiz1Solution();
                 break;
             case 2:
-                if(creatureQuiz.getQuiz2Answer() == quizResponse.getUserAnswer()){
+                if(creatureQuiz.getQuiz2Answer() == quizRequestDTO.getUserAnswer()){
                     isCorrect = 1;
+                    correctCount++;
                 }
                 else{
                     isCorrect = 0;
@@ -71,8 +72,9 @@ public class CreatureQuizService {
                 quizSolutionString = creatureQuiz.getQuiz2Solution();
                 break;
             case 3:
-                if(creatureQuiz.getQuiz3Answer() == quizResponse.getUserAnswer()){
+                if(creatureQuiz.getQuiz3Answer() == quizRequestDTO.getUserAnswer()){
                     isCorrect = 1;
+                    correctCount++;
                 }
                 else{
                     isCorrect = 0;
@@ -80,10 +82,12 @@ public class CreatureQuizService {
                 quizSolutionString = creatureQuiz.getQuiz3Solution();
                 break;
         }
-        return quizSolution.builder()
+        quizSolution = quizSolution.builder()
                 .isCorrect(isCorrect)
                 .quizSolution(quizSolutionString)
+                .correctCount(correctCount)
                 .build();
+        return quizSolution;
     }
 
 }

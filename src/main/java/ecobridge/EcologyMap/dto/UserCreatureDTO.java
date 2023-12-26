@@ -8,5 +8,5 @@ import lombok.Setter;
 public class UserCreatureDTO {
     private Long userId;
     private Long creatureId;
-    private int correctAnswers;
+    private int correctCount;
 }
